@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>已完成任务</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="../layui/css/layui.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+</head>
+<body ontouchstart>
+<div class="weui-tab">
+	<div class="weui-tab__bd">
+		<div id="tab4" class="demos-content-padded weui-tab__panel weui-tab__bd-item weui-pull-to-refresh"
+		     style="top: 0px !important; width: 100%;display:block;padding:0;">
+			<div class="weui-pull-to-refresh__layer">
+				<div class='weui-pull-to-refresh__arrow'></div>
+				<div class='weui-pull-to-refresh__preloader'></div>
+				<div class="down">下拉刷新</div>
+				<div class="up">释放刷新</div>
+				<div class="refresh">正在刷新</div>
+			</div>
+			<div class="weui-panel__hd" style="color: #000 !important; font-weight: bolder; font-size: 15px">已完成任务
+			</div>
+			<div id='planywc' class="content-padded">
+			</div>
+			<div id='footer4' class="weui-loadmore hide">
+				<i class="weui-loading"></i>
+				<span class="weui-loadmore__tips">正在加载</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="./lib/fastclick.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<script src="./js/biz.js"></script>
+
+<script>
+	$(function () {
+		FastClick.attach(document.body);
+		getPlanListywc(true);
+	});
+</script>
+<script>
+	$('#tab4').pullToRefresh().on('pull-to-refresh', function (done) {
+		getPlanListywc(true);
+	});
+	$('#tab4').infinite().on('infinite', function () {
+		getPlanListywc(false);
+	});
+</script>
+     <div style="display:none;">
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274866914'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/stat.php%3Fid%3D1274866914' type='text/javascript'%3E%3C/script%3E"));</script>
+	</div>
+</body>
+</html>
