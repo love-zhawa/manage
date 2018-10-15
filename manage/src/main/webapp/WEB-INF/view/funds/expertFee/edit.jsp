@@ -56,14 +56,14 @@
         </div>
       </div>
 		
-		<div class="form-group">
+		<%-- <div class="form-group">
         <div class="label">
           <label>标题：</label>
         </div>
         <div class="field">
           <input type="text" class="input" name="title" value="${expertFee.title }"/>
         </div>
-      </div>
+      </div> --%>
       <div class="form-group">
         <div class="label">
           <label>备注：</label>
@@ -212,10 +212,6 @@
 	function userSub(){
 		var title = $("input[name ='title']").val();
 		var totalMoney = $("#totalMoney").val();
-		if(title == '') {
-			alert("标题不可以为空！");
-			return ;
-		}
 		
 		var i = 0;
 		
@@ -249,6 +245,12 @@
 		for(var i=0;i<tableId.rows.length;i++) { 
 			amounts = tableId.rows[i].cells[7].getElementsByTagName("INPUT")[0].value;
 			sum = parseFloat(sum) + parseFloat(amounts); 
+			
+			zjname = tableId.rows[i].cells[0].getElementsByTagName("SELECT")[0].value;
+			if(zjname == ''){
+				alert("请选择专家！");
+				return;
+			}
 		} 
 		if(eval(sum)>eval(totalMoney)){
 			alert("金额不可超过经费总金额！");
