@@ -82,8 +82,8 @@
 		if(file != '') {
 			var fileN =file.substring(file.lastIndexOf('.') + 1);
 			
-			if(fileN != 'doc' && fileN != 'docx' && fileN != 'xls' && fileN != 'xlsx') {
-				alert("附件应为文本文档格式，仅支持doc、docx、xls、xlsx！");
+			if(fileN != 'doc' && fileN != 'docx' && fileN != 'xls' && fileN != 'xlsx' && fileN != 'pdf' && fileN != 'ppt' && fileN != 'pptx') {
+				alert("附件应为文本文档格式，仅支持doc、docx、xls、xlsx、ppt、pptx！");
 				return;
 			}
 		}

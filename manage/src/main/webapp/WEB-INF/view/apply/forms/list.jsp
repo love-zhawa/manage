@@ -61,7 +61,7 @@
 		         		</a>
 				      </shiro:hasPermission>
 				      <shiro:hasPermission name="apply_form_down">
-			      		<a class="button border-gray" onclick="down('${form.filePath}')" href="javascript:;">
+			      		<a class="button border-gray" onclick="down('${form.id}')" href="javascript:;">
 		         			<span class="icon-download"></span> 下载
 		         		</a>
 				      </shiro:hasPermission>
@@ -93,8 +93,8 @@
 			window.location.href="apply/forms/toedit/"+id;
 		}
 		
-		function down(filePath){
-			window.location.href = "<%=request.getContextPath() %>/upload/" + filePath;		
+		function down(id){
+			window.location.href ="apply/forms/down/"+id;
 		}
 		
 		function todel(id) {

@@ -8,12 +8,17 @@
 package team.nercita.manage.cms.contoller.apply;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,5 +118,53 @@ public class FormController {
 		applyService.doTransUpdateCommonForms(commonForms);
 		attr.addFlashAttribute("msg", "修改成功！");
 		return "redirect:/apply/form/list";
+	}
+	@RequestMapping("/down/{id}")
+	public void down(@PathVariable String id,HttpServletRequest request,HttpServletResponse response){
+		CommonForms form = applyService.doJoinTransFindCommonForms(id);
+		String fileName = form.getFileName();
+		String path = form.getFilePath();
+		try {
+			request.setCharacterEncoding("utf-8");
+			//fileName = new String(fileName.getBytes("iso-8859-1"), "utf-8");
+			//获取文件路径
+			String filePath = request.getSession().getServletContext().getRealPath("/upload/")+path;
+			filePath = filePath == null ? "" : filePath;
+			//设置向浏览器端传送的文件格式
+			response.setContentType("application/x-download");
+			fileName = URLEncoder.encode(fileName, "UTF-8");response.addHeader("Content-Disposition", "attachment;filename="+ fileName);
+				FileInputStream fis = null;
+				OutputStream os = null;
+				try {
+					os = response.getOutputStream();
+					fis = new FileInputStream(filePath);
+					byte[] b = new byte[1024 * 10];
+					int i = 0;
+					while ((i = fis.read(b)) > 0) {
+						os.write(b, 0, i);
+					}
+					os.flush();
+					os.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					if (fis != null) {
+						try {
+							fis.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					if (os != null) {
+						try {
+							os.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 }
