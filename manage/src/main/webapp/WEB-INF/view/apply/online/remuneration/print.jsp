@@ -18,7 +18,7 @@
 			<span style="width: 30px; display: inline-block;text-align: center;" ><fmt:formatDate value="${remuneration.applyDate }" pattern="MM"/></span>月
 			<span style="width: 30px; display: inline-block;text-align: center;" ><fmt:formatDate value="${remuneration.applyDate }" pattern="dd"/></span>日
 		</p>
-		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1" style="width: 850px;">
+		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
 		<tr>
           <th>姓名</th>
           <th>身份证号码</th>

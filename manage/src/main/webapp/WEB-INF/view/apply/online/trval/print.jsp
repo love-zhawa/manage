@@ -18,7 +18,7 @@
 			<span style="width: 30px; display: inline-block;text-align: center;" ><fmt:formatDate value="${trval.travelDate }" pattern="MM"/></span>月
 			<span style="width: 30px; display: inline-block;text-align: center;" ><fmt:formatDate value="${trval.travelDate }" pattern="dd"/></span>日
 		</p>
-		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1" style="width: 850px">
+		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
 		<tr>
           <th colspan="3">出差人</th>
           <td colspan="5">${trval.name }</td>

@@ -23,7 +23,7 @@
 			<span style="width: 30px; display: inline-block;text-align: center;" ><fmt:formatDate value="${cheque.applyDate }" pattern="MM"/></span>月
 			<span style="width: 30px; display: inline-block;text-align: center;" ><fmt:formatDate value="${cheque.applyDate }" pattern="dd"/></span>日
 		</p>
-		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1" style="width: 850px;">
+		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
 		<tr>
           <th width="30px;">编号</th>
           <th width="65px;">支出单位</th>
