@@ -14,9 +14,7 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
-import team.nercita.manage.cms.po.form.CommonForms;
 import team.nercita.manage.cms.po.form.CommonFormss;
-import team.nercita.manage.cms.service.apply.ApplyService;
 import team.nercita.manage.cms.service.apply.FormService;
 import team.nercita.manage.cms.service.base.BaseService;
 import team.nercita.manage.cms.util.Generator;
@@ -70,7 +68,7 @@ public class FormServiceImpl extends BaseService implements FormService {
 
 	@Override
 	public void doTransUpdateCommonForms(CommonFormss commonFormss) {
-		CommonForms oldCommonForms = baseDao.findObject(CommonForms.class, commonFormss.getId());
+		CommonFormss oldCommonForms = baseDao.findObject(CommonFormss.class, commonFormss.getId());
 		/*oldCommonForms.setFormName(commonFormss.getFormName());
 		oldCommonForms.setContent(commonFormss.getContent());*/
 		if(StringUtils.isNotBlank(commonFormss.getFileName())){
