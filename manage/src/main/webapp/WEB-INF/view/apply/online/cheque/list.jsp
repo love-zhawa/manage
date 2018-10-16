@@ -43,6 +43,7 @@
         <th>标题</th>				
 		<th>申请时间</th>
 		<th>数据条数</th>
+		<th>备注</th>
 		<th>操作</th>
       </tr>
       <c:forEach items="${chequeList}" var="record" varStatus="status">
@@ -51,6 +52,7 @@
       <td>${record.title}</td>
       <td><fmt:formatDate value="${record.applyDate }" pattern="yyyy-MM-dd"/></td>
       <td>${fn:length(record.detailList)}</td>
+      <td>${record.remark}</td>
       <td class="td-manage">
       	<div class="button-group">
       		<c:if test="${record.status == null || record.status == 2}">
@@ -75,7 +77,7 @@
      </tr>
      </c:forEach>
       	<jsp:include page="../../../include/page.jsp">
-      		<jsp:param value="5" name="colspan"/>
+      		<jsp:param value="6" name="colspan"/>
       	</jsp:include>
     </table>
   </div>

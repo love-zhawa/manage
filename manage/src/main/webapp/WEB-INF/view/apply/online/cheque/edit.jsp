@@ -55,7 +55,17 @@ h1 {text-align: center;margin-bottom: 20px;}
         <tbody id="items">
 	     	<c:forEach items="${cheque.detailList}" var="item" varStatus="status">
 				<tr id="item${status.index}">
-					<td><input type="text" class="input" name="detailList[${status.index}].payUnit" value="${item.payUnit }"></td>
+					<td><%-- <input type="text" class="input" name="detailList[${status.index}].payUnit" value="${item.payUnit }"> --%>
+						<select name="detailList[${status.index}].payUnit" class="input w50" style="width: 300px;margin: 8px 0 -15px 0;">
+				          	<option value="1" <c:if test="${item.payUnit eq 1 }">selected</c:if>>北京农业信息技术研究中心</option>
+				          	<option value="2" <c:if test="${item.payUnit eq 2 }">selected</c:if>>北京农业智能装备技术研究中心</option>
+				          	<option value="3" <c:if test="${item.payUnit eq 3 }">selected</c:if>>北京派得伟业科技发展有限公司</option>
+				          	<option value="4" <c:if test="${item.payUnit eq 4 }">selected</c:if>>农芯科技（北京）有限责任公司</option>
+				          	<option value="5" <c:if test="${item.payUnit eq 5 }">selected</c:if>>北京市农林科学院</option>
+				          	<option value="6" <c:if test="${item.payUnit eq 6 }">selected</c:if>>北京智慧农业物联网产业技术创新战略联盟</option>
+				          	<option value="7" <c:if test="${item.payUnit eq 7 }">selected</c:if>>北京农业智能装备技术研究中心（软硬件实验室）</option>
+			           </select>
+		           </td>
 					<td>
 						<select class="input" name="detailList[${status.index}].project.id">
 							<option value="">请选择项目</option>
@@ -104,7 +114,17 @@ h1 {text-align: center;margin-bottom: 20px;}
 			
 			sel += "</select></td>"
 			
-			var tr = "<tr id='item"+num+"'><td><input type='text' class='input' name='detailList[" + num + "].payUnit'></td>"+sel+"<td><input type='text' class='input' name='detailList[" + num + "].number' ></td><td><input type='text' class='input' name='detailList[" + num + "].detail' ></td><td><input type='text' class='input' name='detailList[" + num + "].amount' ></td><td><input type='text' class='input' name='detailList[" + num + "].useInfo' ></td><td><input type='text' class='input' name='detailList[" + num + "].remark' ></td><td><img src='images/minus.png' style='cursor:pointer;' onclick='minusTR("+ num +")'/></td></tr>";
+			var tr = "<tr id='item"+num+"'><td>";
+			//<input type='text' class='input' name='detailList[" + num + "].payUnit'>
+			tr+="<select name='detailList[" + num + "].payUnit'class='input' style='width: 300px;margin: 8px 0 -15px 0;'>";
+			tr+="<option value='1'>北京农业信息技术研究中心</option>";
+			tr+="<option value='2'>北京农业智能装备技术研究中心</option>";
+			tr+="<option value='3'>北京派得伟业科技发展有限公司</option>";
+			tr+="<option value='4'>农芯科技（北京）有限责任公司</option>";
+			tr+="<option value='5'>北京市农林科学院</option>";
+			tr+="<option value='6'>北京智慧农业物联网产业技术创新战略联盟</option>";
+			tr+="<option value='7'>北京农业智能装备技术研究中心（软硬件实验室）</option></select>";
+			tr+="</td>"+sel+"<td><input type='text' class='input' name='detailList[" + num + "].number' ></td><td><input type='text' class='input' name='detailList[" + num + "].detail' ></td><td><input type='text' class='input' name='detailList[" + num + "].amount' ></td><td><input type='text' class='input' name='detailList[" + num + "].useInfo' ></td><td><input type='text' class='input' name='detailList[" + num + "].remark' ></td><td><img src='images/minus.png' style='cursor:pointer;' onclick='minusTR("+ num +")'/></td></tr>";
 			$("#items").append(tr);
 		});
 	}

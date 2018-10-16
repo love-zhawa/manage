@@ -35,19 +35,22 @@ h1 {text-align: center;margin-bottom: 20px;}
 		<tr>
           <th style="width: 70px;">支出单位</th>
           <td colspan="3">
-			<select name="payUnit" class="input w50" style="width: 300px;">
-	      		<option value="信息">信息</option>
-	      		<option value="装备中心">装备中心</option>
-	      		<option value="派得">派得</option>
-	      		<option value="农芯">农芯</option>
+			<select name="payUnit" class="input" style="width: 300px;">
+				<option value="北京农业信息技术研究中心">北京农业信息技术研究中心</option>
+	          	<option value="北京农业智能装备技术研究中心">北京农业智能装备技术研究中心</option>
+	          	<option value="北京派得伟业科技发展有限公司">北京派得伟业科技发展有限公司</option>
+	          	<option value="农芯科技（北京）有限责任公司">农芯科技（北京）有限责任公司</option>
+	          	<option value="北京市农林科学院">北京市农林科学院</option>
+	          	<option value="北京智慧农业物联网产业技术创新战略联盟">北京智慧农业物联网产业技术创新战略联盟</option>
+	          	<option value="北京农业智能装备技术研究中心（软硬件实验室）">北京农业智能装备技术研究中心（软硬件实验室）</option>
       	  </select>
 		  </td>
         </tr>
         <tr>
           <th>支出项目</th>
           <td>
-		<select name="project.id" class="input w50" style="width: 300px;">
-          	<option value="">全部</option>
+		<select name="project.id" class="input" style="width: 300px;">
+          	<option value="">请选择项目</option>
           	<c:forEach items="${projectList }" var="project">
           		<option value="${project.id }">${project.projectName }</option>
           	</c:forEach>

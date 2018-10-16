@@ -26,7 +26,7 @@
 		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
 		<tr>
           <th width="30px;">编号</th>
-          <th width="65px;">支出单位</th>
+          <th>支出单位</th>
           <th>支出项目</th>
           <th width="65px;">财务编号</th>
           <th>分类明细</th>
@@ -37,7 +37,15 @@
         <c:forEach items="${cheque.detailList}" var="item" varStatus="status">
 			<tr>
 				<td>${status.index +1}</td>
-				<td>${item.payUnit }</td>
+				<td>
+					<c:if test="${item.payUnit eq 1}">北京农业信息技术研究中心</c:if>
+		          	<c:if test="${item.payUnit eq 2}">北京农业智能装备技术研究中心</c:if>
+		          	<c:if test="${item.payUnit eq 3}">北京派得伟业科技发展有限公司</c:if>
+		          	<c:if test="${item.payUnit eq 4}">农芯科技（北京）有限责任公司</c:if>
+		          	<c:if test="${item.payUnit eq 5}">北京市农林科学院</c:if>
+		          	<c:if test="${item.payUnit eq 6}">北京智慧农业物联网产业技术创新战略联盟</c:if>
+		          	<c:if test="${item.payUnit eq 7}">北京农业智能装备技术研究中心（软硬件实验室）</c:if>
+				</td>
 				<td>${item.payProject }</td>
 				<td>${item.number }</td>
 				<td>${item.detail }</td>

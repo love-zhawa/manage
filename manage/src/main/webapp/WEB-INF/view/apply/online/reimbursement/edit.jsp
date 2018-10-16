@@ -38,10 +38,13 @@ h1 {text-align: center;margin-bottom: 20px;}
           <th style="width: 70px;">支出单位</th>
           <td colspan="3">
 			<select name="payUnit" class="input w50" style="width: 300px;">
-	      		<option <c:if test="${reimbursement.payUnit == '信息'}">selected</c:if> value="信息">信息</option>
-	      		<option <c:if test="${reimbursement.payUnit == '装备中心'}">selected</c:if> value="装备中心">装备中心</option>
-	      		<option <c:if test="${reimbursement.payUnit == '派得'}">selected</c:if> value="派得">派得</option>
-	      		<option <c:if test="${reimbursement.payUnit == '农芯'}">selected</c:if> value="农芯">农芯</option>
+	      		<option <c:if test="${reimbursement.payUnit == '北京农业信息技术研究中心'}">selected</c:if> value="北京农业信息技术研究中心">北京农业信息技术研究中心</option>
+	          	<option <c:if test="${reimbursement.payUnit == '北京农业智能装备技术研究中心'}">selected</c:if> value="北京农业智能装备技术研究中心">北京农业智能装备技术研究中心</option>
+	          	<option <c:if test="${reimbursement.payUnit == '北京派得伟业科技发展有限公'}">selected</c:if> value="北京派得伟业科技发展有限公司">北京派得伟业科技发展有限公司</option>
+	          	<option <c:if test="${reimbursement.payUnit == '农芯科技（北京）有限责任公司'}">selected</c:if> value="农芯科技（北京）有限责任公司">农芯科技（北京）有限责任公司</option>
+	          	<option <c:if test="${reimbursement.payUnit == '北京市农林科学院'}">selected</c:if> value="北京市农林科学院">北京市农林科学院</option>
+	          	<option <c:if test="${reimbursement.payUnit == '北京智慧农业物联网产业技术创新战略联盟'}">selected</c:if> value="北京智慧农业物联网产业技术创新战略联盟">北京智慧农业物联网产业技术创新战略联盟</option>
+	          	<option <c:if test="${reimbursement.payUnit == '北京农业智能装备技术研究中心（软硬件实验室）'}">selected</c:if> value="北京农业智能装备技术研究中心（软硬件实验室）">北京农业智能装备技术研究中心（软硬件实验室）</option>
       	  </select>
 		  </td>
         </tr>

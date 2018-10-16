@@ -53,7 +53,17 @@ h1 {text-align: center;margin-bottom: 20px;}
 	          <th>汇款用途</th>
 	          <td><input type="text" class="input" name="useInfo" maxlength="50"/></td>
 	          <th style="width: 170px;">支出单位</th>
-	          <td style="width: 180px;"><input type="text" class="input" name="payUnit" maxlength="20"/></td>
+	          <td style="width: 180px;"><!-- <input type="text" class="input" name="payUnit" maxlength="20"/> -->
+	          <select name="payUnit" class="input" style="width: 218px;">
+				<option value="北京农业信息技术研究中心">北京农业信息技术研究中心</option>
+	          	<option value="北京农业智能装备技术研究中心">北京农业智能装备技术研究中心</option>
+	          	<option value="北京派得伟业科技发展有限公司">北京派得伟业科技发展有限公司</option>
+	          	<option value="农芯科技（北京）有限责任公司">农芯科技（北京）有限责任公司</option>
+	          	<option value="北京市农林科学院">北京市农林科学院</option>
+	          	<option value="北京智慧农业物联网产业技术创新战略联盟">北京智慧农业物联网产业技术创新战略联盟</option>
+	          	<option value="北京农业智能装备技术研究中心（软硬件实验室）">北京农业智能装备技术研究中心（软硬件实验室）</option>
+      	    </select>
+      	    </td>
 	        </tr>
 	        
 	        <tr>
