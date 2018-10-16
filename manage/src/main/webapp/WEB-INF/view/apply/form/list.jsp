@@ -39,7 +39,7 @@
       <tr>
         <th>序号</th>
 		<th>表单名称</th>
-		<th>描述</th>
+		<th style="width:25%;">描述</th>
 		<th>附件</th>
 		<th>添加时间</th>
 		<th>发布人</th>
