@@ -51,7 +51,7 @@
       <c:forEach items="${trvalList}" var="record" varStatus="status">
      <tr>
       <td>${(page.currPage - 1) * page.pageRows + status.index+1}</td>
-      <td>${record.name}</td>
+      <td>${record.addUser.name}</td>
       <td>${record.reason}</td>
       <td>${fn:length(record.detailList)}</td>
       <td>${record.card}</td>

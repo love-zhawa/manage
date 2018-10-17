@@ -16,13 +16,13 @@
 		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
 		<tr>
           <th width="80">所在部门</th>
-          <td colspan="4">${backToSchool.deptName }</td>
+          <td colspan="4">${backToSchool.user.userGroupName }</td>
           <th width="80">申请日期</th>
           <td>${backToSchool.applyTime }</td>
         </tr>
         <tr>
           <th>学生姓名</th>
-          <td width="90">${backToSchool.userName }</td>
+          <td width="90">${backToSchool.user.name }</td>
           <th width="80">性别</th>
           <td width="40">
           	<c:if test="${backToSchool.gender == 0}">男 </c:if>

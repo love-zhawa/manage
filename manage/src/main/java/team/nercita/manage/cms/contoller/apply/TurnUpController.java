@@ -57,6 +57,7 @@ public class TurnUpController {
 		ModelAndView view = new ModelAndView("apply/online/turnup/add");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		return view;
 	}
 	
@@ -90,6 +91,7 @@ public class TurnUpController {
 		ModelAndView view = new ModelAndView("apply/online/turnup/edit");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		ApplyTurnUp applyTurnUp = turnUpService.doJoinTransFindApplyTurnUp(id);
 		int size = applyTurnUp.getWorkExperienceList() == null ? 0 : applyTurnUp.getWorkExperienceList().size();
 		

@@ -51,7 +51,6 @@ public class ApplyReimbursement implements java.io.Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	@Column(name = "creator", length = 32)
 	public String getCreator() {
 		return this.creator;

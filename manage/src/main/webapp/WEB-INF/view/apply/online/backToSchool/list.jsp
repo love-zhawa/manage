@@ -38,7 +38,8 @@
     <table class="table table-hover text-center">
       <tr>
         <th>序号</th>
-		<th>所在部门</th>
+        <th>申请人</th>
+		<th>所属小组</th>
 		<th>申请日期</th>
 		<th>学生姓名</th>
 		<th>性别</th>
@@ -53,7 +54,8 @@
       <c:forEach items="${backToSchoolList}" var="backToSchool" varStatus="status">
 			<tr>
 	          <td>${(page.currPage - 1) * page.pageRows + status.index+1}</td>
-	          <td>${backToSchool.deptName }</td>
+	          <td>${backToSchool.user.name }</td>
+	          <td>${backToSchool.user.userGroupName }</td>
 	          <td>${backToSchool.applyTime }</td>
 	          <td>${backToSchool.userName }</td>
 	          <td>

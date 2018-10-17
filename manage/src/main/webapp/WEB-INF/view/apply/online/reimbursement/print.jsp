@@ -20,6 +20,12 @@
 		</p>
 		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
 		<tr>
+          <th style="width: 70px;">申请人</th>
+          <td>${reimbursement.addUser.name }</td>
+          <th style="width: 70px;">所属小组</th>
+          <td colspan="2">${reimbursement.addUser.userGroupName }</td>
+        </tr>
+		<tr>
           <th style="width: 70px;">支出单位</th>
           <td colspan="4">${reimbursement.payUnit }</td>
         </tr>

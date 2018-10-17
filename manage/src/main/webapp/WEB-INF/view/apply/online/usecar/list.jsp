@@ -39,8 +39,8 @@
     <table class="table table-hover text-center">
       <tr>
         <th>序号</th>
-		<th>申请部门</th>
-		<th>申请人</th>
+        <th>申请人</th>
+		<th>所属小组</th>
 		<th>申请日期</th>
 		<th>使用时间</th>
 		<th>事由（人数）</th>
@@ -55,8 +55,8 @@
       <c:forEach items="${usecarList}" var="usecar" varStatus="status">
 			<tr>
 	          <td>${(page.currPage - 1) * page.pageRows + status.index+1}</td>
-	          <td>${usecar.applyDept }</td>
 	          <td>${usecar.user.name }</td>
+	          <td>${usecar.user.userGroupName }</td>
 	          <td>
 	          	<fmt:formatDate value="${usecar.applyTime }" pattern="yyyy-MM-dd"/>
 	          </td>

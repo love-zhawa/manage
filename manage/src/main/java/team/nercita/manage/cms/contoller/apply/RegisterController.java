@@ -49,6 +49,7 @@ public class RegisterController {
         ModelAndView view = new ModelAndView("apply/online/register/add");
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		return view;
 	}
 	
@@ -69,6 +70,7 @@ public class RegisterController {
 		view.addObject("register", registerService.doJoinTransFindApplyRegister(id));
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		return view;
 	}
 	

@@ -50,6 +50,7 @@ public class BackToSchoolController {
 		ModelAndView view = new ModelAndView("apply/online/backToSchool/add");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		return view;
 	}
 	
@@ -68,6 +69,7 @@ public class BackToSchoolController {
 		ModelAndView view = new ModelAndView("apply/online/backToSchool/edit");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		view.addObject("backToSchool", backToSchoolService.doJoinTransFindApplyBackToSchool(id));
 		return view;
 	}
@@ -88,7 +90,6 @@ public class BackToSchoolController {
 	@RequestMapping("/toprint/{id}")
 	public ModelAndView toprint(@PathVariable String id){
 		ModelAndView view = new ModelAndView("apply/online/backToSchool/print");
-		
 		view.addObject("backToSchool", backToSchoolService.doJoinTransFindApplyBackToSchool(id));
 		return view;
 	}

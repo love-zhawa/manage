@@ -44,6 +44,8 @@
     <table class="table table-hover text-center">
       <tr>
         <th>序号</th>
+        <th>申请人</th>
+        <th>所属小组</th>
         <th>支出单位</th>				
 		<th>支出项目</th>
 		<th>财务编号</th>
@@ -54,6 +56,8 @@
       <c:forEach items="${sementList}" var="record" varStatus="status">
      <tr>
       <td>${(page.currPage - 1) * page.pageRows + status.index+1}</td>
+      <td>${record.addUser.name}</td>
+      <td>${record.addUser.userGroupName}</td>
       <td>${record.payUnit}</td>
       <td>${record.project.projectName }</td>
       <td>${record.number }</td>
@@ -73,17 +77,17 @@
 	       		</a>
 	       		</shiro:hasPermission>
 	       	</c:if>
-       		<shiro:hasPermission name="apply_reimbursement_print">
-       		<a class="button border-yellow" onclick="toprint('${record.id}')" href="javascript:;">
-       			<span class="icon-print"></span> 打印
-       		</a>
-       		</shiro:hasPermission>
+	       	<shiro:hasPermission name="apply_reimbursement_print">
+	       		<a class="button border-yellow" onclick="toprint('${record.id}')" href="javascript:;">
+	       			<span class="icon-print"></span> 打印
+	       		</a>
+	       		</shiro:hasPermission>
        		</div>
        </td>
      </tr>
      </c:forEach>
       	<jsp:include page="../../../include/page.jsp">
-      		<jsp:param value="7" name="colspan"/>
+      		<jsp:param value="9" name="colspan"/>
       	</jsp:include>
     </table>
   </div>

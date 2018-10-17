@@ -30,6 +30,12 @@ h1 {text-align: center;margin-bottom: 20px;}
 	<form action="apply/online/reimbursement/edit" method="post" class="form-x" id="form-article-add" >
 	<input type="hidden" value="${reimbursement.id}" name="id"/>
 		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
+		<tr style="height: 40px;">
+          <th width="150">申请人</th>
+          <td style="padding-top: 13px;">${reimbursement.addUser.name }</td>
+           <th width="150">所属小组</th>
+          <td width="150">${reimbursement.addUser.userGroupName }</td>
+        </tr>
 		<tr>
           <th style="width: 70px;">申请时间</th>
           <td colspan="3"> <input type="text" class="input" id="reDate" name="reDate" autocomplete="off" value="<fmt:formatDate value="${reimbursement.reDate }" pattern="yyyy-MM-dd"/>"/></td>
@@ -37,7 +43,7 @@ h1 {text-align: center;margin-bottom: 20px;}
 		<tr>
           <th style="width: 70px;">支出单位</th>
           <td colspan="3">
-			<select name="payUnit" class="input w50" style="width: 300px;">
+			<select name="payUnit" class="input" style="width: 300px;">
 	      		<option <c:if test="${reimbursement.payUnit == '北京农业信息技术研究中心'}">selected</c:if> value="北京农业信息技术研究中心">北京农业信息技术研究中心</option>
 	          	<option <c:if test="${reimbursement.payUnit == '北京农业智能装备技术研究中心'}">selected</c:if> value="北京农业智能装备技术研究中心">北京农业智能装备技术研究中心</option>
 	          	<option <c:if test="${reimbursement.payUnit == '北京派得伟业科技发展有限公'}">selected</c:if> value="北京派得伟业科技发展有限公司">北京派得伟业科技发展有限公司</option>

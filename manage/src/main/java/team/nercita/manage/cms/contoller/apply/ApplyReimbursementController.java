@@ -58,6 +58,9 @@ public class ApplyReimbursementController {
 	@RequestMapping("/toadd")
 	public ModelAndView toadd(){
 		ModelAndView view = new ModelAndView("apply/online/reimbursement/add");
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		view.addObject("projectList", projectService.doJoinTransQueryProject());
 		return view;
 	}

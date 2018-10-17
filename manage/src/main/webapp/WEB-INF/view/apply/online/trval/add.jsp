@@ -30,7 +30,7 @@ h1 {text-align: center;margin-bottom: 20px;}
 		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1" style="width: 1000px">
 		<tr>
 		  <th colspan="2">出差人</th>
-          <td colspan="3"><input type="text" class="input" name="name" value=""/></td>
+          <td colspan="3">${username}</td>
           <th colspan="2">申请时间</th>
           <td colspan="2"><input type="text" class="input" id="travelDate" name="travelDate" value="" autocomplete="off"/></td>
           <th colspan="2">出差事由</th>

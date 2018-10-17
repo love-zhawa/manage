@@ -50,6 +50,7 @@ public class NeedHandsController {
 		ModelAndView view = new ModelAndView("apply/online/needhands/add");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		return view;
 	}
 	
@@ -68,6 +69,7 @@ public class NeedHandsController {
 		ModelAndView view = new ModelAndView("apply/online/needhands/edit");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		view.addObject("needhands", needHandsService.doJoinTransFindApplyNeedHands(id));
 		return view;
 	}

@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Component;
 
 import team.nercita.manage.cms.po.deptmanage.User;
@@ -39,11 +40,18 @@ public class TrvalServiceImpl extends BaseService implements TrvalService {
 		String name = MapUtils.getString(paramMap, "name");
 		String reason = MapUtils.getString(paramMap, "reason");
 		
-		String sql = "select a from ApplyTrval a left join fetch a.detailList where 1=1 ";
+		String sql = "select a from ApplyTrval a left join fetch a.detailList left join fetch a.addUser where 1=1 ";
 		String countSql = "select count(a) from ApplyTrval a where 1=1";
 		
 		Map<String, Object> queryMap = new HashMap<String, Object>();
 		
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+		//申请管理普通用户只能看自己的
+		if(user.getPost()==2 || user.getPost()==3){
+			sql += " and a.addUser.id = :USERID";
+			countSql += " and a.addUser.id = :USERID";
+			queryMap.put("USERID", user.getId());
+		}
 		if(StringUtils.isNotBlank(name)){
 			sql += " and a.name like :NAME";
 			countSql += " and a.name like :NAME";

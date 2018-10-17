@@ -12,8 +12,10 @@ import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Component;
 
+import team.nercita.manage.cms.po.deptmanage.User;
 import team.nercita.manage.cms.po.form.ApplyUseCar;
 import team.nercita.manage.cms.service.apply.UseCardService;
 import team.nercita.manage.cms.service.base.BaseService;
@@ -34,8 +36,15 @@ public class UseCardServiceImpl extends BaseService implements UseCardService {
 		
 		String sql = "select a from ApplyUseCar a left join fetch a.user where 1=1 ";
 		String countSql = "select count(a) from ApplyUseCar a where 1=1";
-		
 		Map<String, Object> queryMap = new HashMap<String, Object>();
+		
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+		//申请管理普通用户只能看自己的
+		if(user.getPost()==2 || user.getPost()==3){
+			sql += " and a.user.id = :USERID";
+			countSql += " and a.user.id = :USERID";
+			queryMap.put("USERID", user.getId());
+		}
 		
 		if(StringUtils.isNotBlank(userName)){
 			sql += " and a.user.name like :USERNAME";
@@ -69,7 +78,7 @@ public class UseCardServiceImpl extends BaseService implements UseCardService {
 	public void doTransUpdateApplyUseCar(ApplyUseCar applyUseCar) {
 		ApplyUseCar oldApplyUseCar = baseDao.findObject(ApplyUseCar.class, applyUseCar.getId());
 		
-		oldApplyUseCar.setApplyDept(applyUseCar.getApplyDept());
+		//oldApplyUseCar.setApplyDept(applyUseCar.getApplyDept());
 		oldApplyUseCar.setApplyTime(applyUseCar.getApplyTime());
 		oldApplyUseCar.setSpecialInfo(applyUseCar.getSpecialInfo());
 		oldApplyUseCar.setReason(applyUseCar.getReason());

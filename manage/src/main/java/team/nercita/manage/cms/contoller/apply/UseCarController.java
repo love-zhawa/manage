@@ -51,6 +51,7 @@ public class UseCarController {
 		ModelAndView view = new ModelAndView("apply/online/usecar/add");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		return view;
 	}
 	
@@ -79,6 +80,7 @@ public class UseCarController {
 		view.addObject("usecar", useCardService.doJoinTransFindApplyUseCar(id));
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		return view;
 	}
 	

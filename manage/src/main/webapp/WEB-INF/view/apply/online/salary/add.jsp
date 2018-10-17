@@ -28,11 +28,17 @@ h1 {text-align: center;margin-bottom: 20px;}
   	<h1 class="title">调薪申请表</h1>
 		<form action="apply/online/salary/add" method="post" class="form-x" id="form-article-add" enctype="multipart/form-data">
 			<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
-			<tr>
+			<!-- <tr>
 	          <th width="120">所属部门</th>
 	          <td width="130"><input type="text" class="input" id="dept" name="dept" value=""/></td>
 	          <th width="90">姓名</th>
 	          <td width="130"><input type="text" class="input" name="userName" id="userName" value=""/></td>
+	        </tr> -->
+	        <tr style="height: 40px;">
+	          <th width="150">申请人</th>
+	          <td style="padding-top: 13px;">${username }</td>
+	          <th width="150">所属小组</th>
+	          <td width="150">${groupname }</td>
 	        </tr>
 	        <tr>
 	          <th width="90">学历/位</th>

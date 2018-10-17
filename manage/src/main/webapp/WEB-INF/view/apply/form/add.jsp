@@ -36,6 +36,8 @@
         </div>
         <div class="field">
           <input type="file" class="input-text" value="" placeholder="" id="" name="file">
+          
+          <input type="button" onclick="xg()" value="修改名称">
         </div>
       </div>
       
@@ -64,6 +66,9 @@
 	</div>
 </body>
 	<script type="text/javascript">
+	function xg(){
+		alert(1);
+	}
 	function userSub(){
 		var formName = $("input[name ='formName']").val();
 		var file = $("input[name ='file']").val();

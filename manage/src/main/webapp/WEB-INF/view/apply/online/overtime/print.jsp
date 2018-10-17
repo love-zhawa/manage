@@ -23,7 +23,7 @@
           <th width="17%">申请人</th>
           <td width="33%">${overtime.user.name }</td>
           <th width="17%">所属小组</th>
-          <td width="33%">${groupname }</td>
+          <td width="33%">${overtime.user.userGroupName }</td>
         </tr>
         <tr height="50">
           <th>加班事由</th>

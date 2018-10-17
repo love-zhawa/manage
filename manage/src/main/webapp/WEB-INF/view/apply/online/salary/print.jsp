@@ -23,10 +23,10 @@
 		</p>
 		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
 		<tr>
-          <th width="120">所属部门</th>
-          <td width="130">${salary.dept }</td>
-          <th width="90">姓名</th>
-          <td width="130">${salary.userName }</td>
+          <th width="90">申请人</th>
+          <td width="130">${salary.user.name }</td>
+          <th width="120">所属小组</th>
+          <td width="130">${salary.user.userGroupName }</td>
           <th width="90">学历/位</th>
           <td width="130">${salary.education }</td>
         </tr>

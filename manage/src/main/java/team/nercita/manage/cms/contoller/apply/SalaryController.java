@@ -50,6 +50,7 @@ public class SalaryController {
 		ModelAndView view = new ModelAndView("apply/online/salary/add");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		return view;
 	}
 	
@@ -68,6 +69,7 @@ public class SalaryController {
 		ModelAndView view = new ModelAndView("apply/online/salary/edit");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		view.addObject("salary", salaryService.doJoinTransFindApplySalary(id));
 		return view;
 	}
@@ -88,7 +90,7 @@ public class SalaryController {
 	@RequestMapping("/toprint/{id}")
 	public ModelAndView toprint(@PathVariable String id){
 		ModelAndView view = new ModelAndView("apply/online/salary/print");
-		
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("salary", salaryService.doJoinTransFindApplySalary(id));
 		return view;
 	}

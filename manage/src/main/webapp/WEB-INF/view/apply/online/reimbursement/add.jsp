@@ -28,6 +28,12 @@ h1 {text-align: center;margin-bottom: 20px;}
   <h1 class="title">支出报销明细单</h1>
 	<form action="apply/online/reimbursement/add" method="post" class="form-x" id="form-article-add" >
 		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
+		<tr style="height: 40px;">
+          <th width="150">申请人</th>
+          <td style="padding-top: 13px;">${username }</td>
+           <th width="150">所属小组</th>
+          <td width="150">${groupname }</td>
+        </tr>
 		<tr>
           <th style="width: 70px;">申请时间</th>
           <td colspan="3"><input type="text" class="input" id="reDate" name="reDate" value="" autocomplete="off"/></td>
@@ -113,14 +119,22 @@ h1 {text-align: center;margin-bottom: 20px;}
 	
 	function userSub(){
 		var sum = $("input[name ='sum']").val();
-		
+		var amount = $("input[name$='.amount']").val();
+		var projectId = $("select[name ='project.id']").val();
 		if(sum != '') {
 			if(isNaN(sum)) {
 				alert("票据张数输入错误！");
 				return ;
 			}
 		}
-		
+		if(projectId == '') {
+			alert("请选择项目！");
+			return ;
+		}
+		if(amount == ''){
+			alert("请输入报销金额!");
+			return ;
+		}
 		var i = 0;
 		
 		$("input[name$='.amount']").each(function(){

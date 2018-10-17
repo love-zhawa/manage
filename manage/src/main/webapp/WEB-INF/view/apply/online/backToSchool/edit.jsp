@@ -29,15 +29,15 @@ h1 {text-align: center;margin-bottom: 20px;}
 		<form action="apply/online/backToSchool/edit" method="post" class="form-x" id="form-article-add" >
 		<input type="hidden" name="id" value="${backToSchool.id }"/>
 			<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
+			<tr style="height: 40px;">
+	          <th width="150">申请人</th>
+	          <td style="padding-top: 13px;">${username }</td>
+	           <th width="150">所属小组</th>
+	          <td width="150">${groupname }</td>
+	        </tr>
 			<tr>
-	          <th>所在部门</th>
-	          <td><input type="text" class="input" name="deptName" value="${backToSchool.deptName }"/></td>
 	          <th>申请日期</th>
 	          <td><input type="text" class="input" id="applyTime" name="applyTime" value="${backToSchool.applyTime }" autocomplete="off"/></td>
-	        </tr>
-	        <tr>
-	          <th>学生姓名</th>
-	          <td><input type="text" class="input" name="userName" value="${backToSchool.userName }"/></td>
 	          <th>性别</th>
 	          <td>
 	          	<label><input name="gender" type="radio" <c:if test="${backToSchool.gender == 0}">checked="checked" </c:if> class="ace" value="0"><span class="lbl">男</span></label>&nbsp;&nbsp;

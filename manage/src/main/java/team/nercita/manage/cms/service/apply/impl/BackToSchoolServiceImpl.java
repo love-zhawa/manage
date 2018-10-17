@@ -12,8 +12,10 @@ import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Component;
 
+import team.nercita.manage.cms.po.deptmanage.User;
 import team.nercita.manage.cms.po.form.ApplyBackToSchool;
 import team.nercita.manage.cms.service.apply.BackToSchoolService;
 import team.nercita.manage.cms.service.base.BaseService;
@@ -32,11 +34,18 @@ public class BackToSchoolServiceImpl extends BaseService implements BackToSchool
 	public Map<String, Object> doJoinTransFindApplyBackToSchoolList(Integer goPage, Map<String, Object> paramMap) {
 		String userName = MapUtils.getString(paramMap, "userName");
 		
-		String sql = "select a from ApplyBackToSchool a where 1=1 ";
+		String sql = "select a from ApplyBackToSchool a left join fetch a.user where 1=1 ";
 		String countSql = "select count(a) from ApplyBackToSchool a where 1=1";
 		
 		Map<String, Object> queryMap = new HashMap<String, Object>();
 		
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+		//申请管理普通用户只能看自己的
+		if(user.getPost()==2 || user.getPost()==3){
+			sql += " and a.user.id = :USERID";
+			countSql += " and a.user.id = :USERID";
+			queryMap.put("USERID", user.getId());
+		}
 		if(StringUtils.isNotBlank(userName)){
 			sql += " and a.userName like :USERNAME";
 			countSql += " and a.userName like :USERNAME";
@@ -61,8 +70,9 @@ public class BackToSchoolServiceImpl extends BaseService implements BackToSchool
 
 	@Override
 	public ApplyBackToSchool doJoinTransFindApplyBackToSchool(String id) {
-		
-		return baseDao.findObject(ApplyBackToSchool.class, id);
+		ApplyBackToSchool sc = baseDao.findObject(ApplyBackToSchool.class, id);
+		sc.getUser().getName();
+		return sc;
 	}
 
 	@Override

@@ -31,10 +31,10 @@ h1 {text-align: center;margin-bottom: 20px;}
 		<input type="hidden" name="id" value="${usecar.id }"/>
 			<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
 			<tr style="height: 40px;">
-	          <th width="150">申请部门</th>
-	          <td width="150"><input type="text" class="input" id="applyDept" name="applyDept" value="${usecar.applyDept }"/></td>
 	          <th width="150">申请人</th>
-	          <td>${username }</td>
+	          <td style="padding-top: 13px;">${username }</td>
+	           <th width="150">所属小组</th>
+	          <td width="150">${groupname }<!-- <input type="text" class="input" id="applyDept" name="applyDept" value=""/> --></td>
 	        </tr>
 	        <tr>
 	          <th>申请日期</th>

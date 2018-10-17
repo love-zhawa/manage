@@ -39,8 +39,8 @@
     <table class="table table-hover text-center">
       <tr>
         <th>序号</th>
-		<th>所属部门</th>
-		<th>姓名</th>
+        <th>申请人</th>
+		<th>所属小组</th>
 		<th>学历/位</th>
 		<th>入中心时间</th>
 		<th>编制</th>
@@ -56,8 +56,8 @@
       <c:forEach items="${salaryList}" var="salary" varStatus="status">
 			<tr>
 	          <td>${(page.currPage - 1) * page.pageRows + status.index+1}</td>
-	          <td>${salary.dept }</td>
-	          <td>${salary.userName }</td>
+	          <td>${salary.user.name }</td>
+	          <td>${salary.user.userGroupName }</td>
 	          <td>
 	          	${salary.education}
 	          </td>

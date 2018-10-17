@@ -66,10 +66,10 @@
 	       		</shiro:hasPermission>
        		</c:if>
        		<shiro:hasPermission name="apply_remuneration_print">
-       		<a class="button border-yellow" onclick="toprint('${record.id}')" href="javascript:;">
-       			<span class="icon-print"></span> 打印
-       		</a>
-       		</shiro:hasPermission>
+	       		<a class="button border-yellow" onclick="toprint('${record.id}')" href="javascript:;">
+	       			<span class="icon-print"></span> 打印
+	       		</a>
+	       		</shiro:hasPermission>
        		</div>
        </td>
      </tr>

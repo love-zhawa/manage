@@ -13,8 +13,10 @@ import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Component;
 
+import team.nercita.manage.cms.po.deptmanage.User;
 import team.nercita.manage.cms.po.form.ApplyReimbursement;
 import team.nercita.manage.cms.po.form.ReimbursementDetail;
 import team.nercita.manage.cms.po.projectmanage.Project;
@@ -37,11 +39,18 @@ public class ReimbursementServiceImpl extends BaseService implements Reimburseme
 		String projectId = MapUtils.getString(paramMap, "projectId");
 		Integer status = MapUtils.getInteger(paramMap, "status");
 		
-		String sql = "select a from ApplyReimbursement a left join fetch a.project where 1=1 ";
+		String sql = "select a from ApplyReimbursement a left join fetch a.project left join fetch a.addUser where 1=1 ";
 		String countSql = "select count(a) from ApplyReimbursement a where 1=1";
 		
 		Map<String, Object> queryMap = new HashMap<String, Object>();
 		
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+		//申请管理普通用户只能看自己的
+		if(user.getPost()==2 || user.getPost()==3){
+			sql += " and a.addUser.id = :USERID";
+			countSql += " and a.addUser.id = :USERID";
+			queryMap.put("USERID", user.getId());
+		}
 		if(StringUtils.isNotBlank(payUnit)){
 			sql += " and a.payUnit like :PAYUNIT";
 			countSql += " and a.payUnit like :PAYUNIT";
@@ -129,7 +138,7 @@ public class ReimbursementServiceImpl extends BaseService implements Reimburseme
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> doJoinTransFindApplyReimbursement(String id) {
-		String sql = "select r from ApplyReimbursement r left join fetch r.project where r.id = :SID";
+		String sql = "select r from ApplyReimbursement r left join fetch r.project left join fetch r.addUser where r.id = :SID";
 		
 		Map<String, Object> paramMap = new HashMap();
 		paramMap.put("SID", id);
@@ -199,19 +208,23 @@ public class ReimbursementServiceImpl extends BaseService implements Reimburseme
 		
 		String sql = "select si from ReimbursementDetail si where si.applyReimbursement.id = :ID";
 		List<ReimbursementDetail> oldList = (List<ReimbursementDetail>) baseDao.findObjectList(sql, paramMap);
-		for (ReimbursementDetail detail : oldList) {
-			baseDao.delete(detail);
+		if(oldList.size()>0){
+			for (ReimbursementDetail detail : oldList) {
+				baseDao.delete(detail);
+			}
 		}
 		
-		for (ReimbursementDetail reimbursementDetail : detailList) {
-			if(StringUtils.isBlank(reimbursementDetail.getDetail()) && reimbursementDetail.getAmount() == null){
-				continue;
+		if(detailList.size()>0){
+			for (ReimbursementDetail reimbursementDetail : detailList) {
+				if(StringUtils.isBlank(reimbursementDetail.getDetail()) && reimbursementDetail.getAmount() == null){
+					continue;
+				}
+				reimbursementDetail.setId(Generator.getUUID());
+				reimbursementDetail.setAddUser(applyReimbursement.getAddUser());
+				reimbursementDetail.setApplyReimbursement(applyReimbursement);
+				
+				baseDao.save(reimbursementDetail);
 			}
-			reimbursementDetail.setId(Generator.getUUID());
-			reimbursementDetail.setAddUser(applyReimbursement.getAddUser());
-			reimbursementDetail.setApplyReimbursement(applyReimbursement);
-			
-			baseDao.save(reimbursementDetail);
 		}
 		applyReimbursement.setDetailList(null);
 		baseDao.update(applyReimbursement);

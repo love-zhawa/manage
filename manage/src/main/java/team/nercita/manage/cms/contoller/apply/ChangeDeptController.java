@@ -50,6 +50,7 @@ public class ChangeDeptController {
 		ModelAndView view = new ModelAndView("apply/online/changeDept/add");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		return view;
 	}
 	
@@ -68,6 +69,7 @@ public class ChangeDeptController {
 		ModelAndView view = new ModelAndView("apply/online/changeDept/edit");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		view.addObject("username",user.getName());
+		view.addObject("groupname",user.getUserGroup().getGroupName());
 		view.addObject("changeDept", changeDeptService.doJoinTransFindApplyChangeDept(id));
 		return view;
 	}

@@ -16,7 +16,7 @@
 		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
 		<tr style="height: 40px;">
           <th width="150">申请部门</th>
-          <td width="150">${usecar.applyDept }</td>
+          <td width="150">${usecar.user.userGroupName }</td>
           <th width="150">申请人</th>
           <td>${usecar.user.name }</td>
         </tr>
