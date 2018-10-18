@@ -118,9 +118,14 @@ public class OtherController {
 	@RequestMapping("/del")
 	@ResponseBody
 	public String del(String id){
+		OtherFund otherFund = otherService.doJoinTransFindOtherById(id);
 		try {
-			otherService.doTransCommonDel(id);
-			otherService.doTransCommonDel1(id);
+			if(otherFund.getStatus()==null||otherFund.getStatus()==0||otherFund.getStatus()==2){
+				otherService.doTransCommonDel1(id);
+			}else if(otherFund.getStatus()==1){
+				otherService.doTransCommonDel(id);
+				otherService.doTransCommonDel1(id);
+			}
 			return "0";
 		} catch (Exception e) {
 			return "1";
