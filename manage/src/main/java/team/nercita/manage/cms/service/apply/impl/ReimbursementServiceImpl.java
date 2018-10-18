@@ -260,7 +260,7 @@ public class ReimbursementServiceImpl extends BaseService implements Reimburseme
 	}
 
 	@Override
-	public ApplyReimbursement doTransCommonDel(String id) {
+	public void doTransCommonDel(String id) {
 		String asql = "select r from ApplyReimbursement r left join fetch r.project where r.id = :ID";//旧数据,applyReimbursement是新数据
 		
 		Map<String, Object> paramMap = new HashMap();
@@ -271,7 +271,18 @@ public class ReimbursementServiceImpl extends BaseService implements Reimburseme
 		List<ReimbursementDetail> oldList = (List<ReimbursementDetail>) baseDao.findObjectList(sql, paramMap);
 		
 		Double sum = 0.0;
-		if(app.getStatus()==1&&app.getStatus()!=null){
+		if(app.getStatus()==null||app.getStatus()==0||app.getStatus()==2){
+			System.out.println("********");
+			if(oldList != null && !oldList.isEmpty()) {
+				for (ReimbursementDetail storageItem : oldList) {
+					baseDao.delete(storageItem);
+				}
+			}
+			sql = "select a from ApplyReimbursement a where a.id = :ID";
+			Object obj = baseDao.findObject(sql, paramMap);
+			baseDao.delete(obj);
+			
+		}else if(app.getStatus()==1){
 			String psql = "select p from Project p where p.id = :PID";
 			Map<String,Object> proMap = new HashMap();
 			proMap.put("PID",app.getProject().getId());
@@ -281,8 +292,16 @@ public class ReimbursementServiceImpl extends BaseService implements Reimburseme
 			}
 			project.setTotalMoney(project.getTotalMoney()+sum);
 			baseDao.update(project);
+			
+			if(oldList != null && !oldList.isEmpty()) {
+				for (ReimbursementDetail storageItem : oldList) {
+					baseDao.delete(storageItem);
+				}
+			}
+			sql = "select a from ApplyReimbursement a where a.id = :ID";
+			Object obj = baseDao.findObject(sql, paramMap);
+			baseDao.delete(obj);
 		}
-		return null;
 		
 	}
 	@Override

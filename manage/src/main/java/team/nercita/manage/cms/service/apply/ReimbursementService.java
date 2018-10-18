@@ -33,6 +33,6 @@ public interface ReimbursementService {
 	 public ApplyReimbursement doTransUpdateApplyReimbursement(ApplyReimbursement applyReimbursement,List<ReimbursementDetail> detailList);
 	 public void doTransUpdateApplyReimbursement1(ApplyReimbursement applyReimbursement , List<ReimbursementDetail> detailList);
 	 
-	 public ApplyReimbursement doTransCommonDel(String id);
+	 public void doTransCommonDel(String id);
 	 public void doTransCommonDel1(String id);
 }

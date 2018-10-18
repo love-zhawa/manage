@@ -204,6 +204,12 @@
 	function userSub(){
 		var title = $("input[name ='title']").val();
 		var totalMoney = $("#totalMoney").val();
+		var projectId = $("select[name ='project.id']").val();
+		
+		if(projectId == '') {
+			alert("请选择项目！");
+			return ;
+		}
 		var i = 0;
 		
 		$("input[name$='.days']").each(function(){
@@ -243,6 +249,10 @@
 				return;
 			}
 		} 
+		if(amounts == ''){
+			alert("实付金额不能为空！");
+			return;
+		}
 		if(eval(sum)>eval(totalMoney)){
 			alert("金额不可超过经费总金额！");
 			return;

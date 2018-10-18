@@ -331,7 +331,7 @@ public class ExpertFeeServiceImpl extends BaseService implements ExpertFeeServic
 	}
 	
 	@Override
-	public ApplyExpertFee doTransCommonDel(String id) {
+	public void doTransCommonDel(String id) {
 		String asql = "select r from ApplyExpertFee r left join fetch r.project where r.id = :ID";//旧数据,applyReimbursement是新数据
 		
 		Map<String, Object> paramMap = new HashMap();
@@ -353,7 +353,12 @@ public class ExpertFeeServiceImpl extends BaseService implements ExpertFeeServic
 			project.setTotalMoney(project.getTotalMoney()+sum);
 			baseDao.update(project);
 		}
-		return null;
+		if(oldList != null && !oldList.isEmpty()) {
+			for (ExpertFeeDetail old : oldList) {
+				baseDao.delete(old);
+			}
+		}
+		baseDao.delete(app);
 		
 	}
 	@Override

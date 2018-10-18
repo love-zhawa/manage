@@ -86,8 +86,12 @@ public class RemunerationController {
 		
 		applyRemuneration.setCreateTime(oldApplyRemuneration.getCreateTime());
 		applyRemuneration.setCreator(oldApplyRemuneration.getCreator());
-		remunerationService.doTransUpdateApplyRemuneration(applyRemuneration, user);
-		remunerationService.doTransUpdateApplyRemuneration1(applyRemuneration, user);
+		if(applyRemuneration.getStatus()==null||applyRemuneration.getStatus()==0||applyRemuneration.getStatus()==2){
+			remunerationService.doTransUpdateApplyRemuneration1(applyRemuneration, user);
+		}else if(applyRemuneration.getStatus()==1){
+			remunerationService.doTransUpdateApplyRemuneration(applyRemuneration, user);
+			remunerationService.doTransUpdateApplyRemuneration1(applyRemuneration, user);
+		}
 		
 		attr.addFlashAttribute("msg", "修改成功！");
 		return "redirect:/funds/remuneration/list";
@@ -144,9 +148,14 @@ public class RemunerationController {
 	@RequestMapping("/del")
 	@ResponseBody
 	public String del(String id){
+		ApplyRemuneration applyRemuneration = remunerationService.doJoinTransFindApplyRemuneration(id);
 		try {
-			remunerationService.doTransCommonDel(id);
-			remunerationService.doTransCommonDel1(id);
+			if(applyRemuneration.getStatus()==null||applyRemuneration.getStatus()==0||applyRemuneration.getStatus()==2){
+				remunerationService.doTransCommonDel1(id);
+			}else if(applyRemuneration.getStatus()==1){
+				remunerationService.doTransCommonDel(id);
+				remunerationService.doTransCommonDel1(id);
+			}
 			return "0";
 		} catch (Exception e) {
 			return "1";

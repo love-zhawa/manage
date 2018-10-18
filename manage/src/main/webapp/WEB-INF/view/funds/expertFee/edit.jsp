@@ -212,7 +212,12 @@
 	function userSub(){
 		var title = $("input[name ='title']").val();
 		var totalMoney = $("#totalMoney").val();
+		var projectId = $("select[name ='project.id']").val();
 		
+		if(projectId == '') {
+			alert("请选择项目！");
+			return ;
+		}
 		var i = 0;
 		
 		$("input[name$='.days']").each(function(){

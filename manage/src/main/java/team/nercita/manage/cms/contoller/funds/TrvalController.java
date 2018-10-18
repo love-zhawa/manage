@@ -87,8 +87,12 @@ public class TrvalController {
 		
 		applyTrval.setCreateTime(oldApplyTrval.getCreateTime());
 		applyTrval.setCreator(oldApplyTrval.getCreator());
-		trvalService.doTransUpdateApplyTrval(applyTrval, user);
-		trvalService.doTransUpdateApplyTrval1(applyTrval, user);
+		if(applyTrval.getStatus()==null||applyTrval.getStatus()==0||applyTrval.getStatus()==2){
+			trvalService.doTransUpdateApplyTrval1(applyTrval, user);
+		}else if(applyTrval.getStatus()==1){
+			trvalService.doTransUpdateApplyTrval(applyTrval, user);
+			trvalService.doTransUpdateApplyTrval1(applyTrval, user);
+		}
 		
 		attr.addFlashAttribute("msg", "修改成功！");
 		return "redirect:/funds/trval/list";
@@ -181,9 +185,14 @@ public class TrvalController {
 	@RequestMapping("/del")
 	@ResponseBody
 	public String del(String id){
+		ApplyTrval applyTrval = trvalService.doJoinTransFindApplyTrval(id);
 		try {
-			trvalService.doTransCommonDel(id);
-			trvalService.doTransCommonDel1(id);
+			if(applyTrval.getStatus()==null||applyTrval.getStatus()==0||applyTrval.getStatus()==2){
+				trvalService.doTransCommonDel1(id);
+			}else if(applyTrval.getStatus()==1){
+				trvalService.doTransCommonDel(id);
+				trvalService.doTransCommonDel1(id);
+			}
 			return "0";
 		} catch (Exception e) {
 			return "1";

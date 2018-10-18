@@ -77,9 +77,13 @@ public class DialOutController {
 	
 	@RequestMapping("/edit")
 	public String edit(DialOutFund dialOutFund, RedirectAttributes attr){
+		if(dialOutFund.getStatus()==null||dialOutFund.getStatus()==0||dialOutFund.getStatus()==2){
+			dialOutService.doTransUpdateDialOut1(dialOutFund);
+		}else if(dialOutFund.getStatus()==1){
+			dialOutService.doTransUpdateDialOut(dialOutFund);
+			dialOutService.doTransUpdateDialOut1(dialOutFund);
+		}
 		
-		dialOutService.doTransUpdateDialOut(dialOutFund);
-		dialOutService.doTransUpdateDialOut1(dialOutFund);
 		attr.addFlashAttribute("msg", "修改成功!");
 		return "redirect:/funds/out/list";
 	}
@@ -107,15 +111,22 @@ public class DialOutController {
 	/**
 	 * 删除
 	 * @param id
+	 * 
+	 * 
 	 * @param entry
 	 * @return
 	 */
 	@RequestMapping("/del")
 	@ResponseBody
 	public String del(String id){
+		DialOutFund dialOutFund = dialOutService.doJoinTransFindDialOutById(id);
 		try {
-			dialOutService.doTransCommonDel(id);
-			dialOutService.doTransCommonDel1(id);
+			if(dialOutFund.getStatus()==null||dialOutFund.getStatus()==0||dialOutFund.getStatus()==2){
+				dialOutService.doTransCommonDel1(id);
+			}else if(dialOutFund.getStatus()==1){
+				dialOutService.doTransCommonDel(id);
+				dialOutService.doTransCommonDel1(id);
+			}
 			return "0";
 		} catch (Exception e) {
 			return "1";

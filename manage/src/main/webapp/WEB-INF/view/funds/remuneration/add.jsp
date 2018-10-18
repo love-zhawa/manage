@@ -152,6 +152,12 @@
 	function userSub(){
 		var title = $("input[name ='title']").val();
 		var totalMoney = $("#totalMoney").val();
+		var projectId = $("select[name ='project.id']").val();
+		
+		if(projectId == '') {
+			alert("请选择支出项目！");
+			return ;
+		}
 		if(title == '') {
 			alert("标题不可以为空！");
 			return ;
@@ -204,7 +210,10 @@
 			amounts = tableId.rows[i].cells[6].getElementsByTagName("INPUT")[0].value;
 			sum = parseFloat(sum) + parseFloat(amounts); 
 		} 
-		
+		if(amounts == ''){
+			alert("实付金额不能为空！");
+			return;
+		}
 		if(eval(sum)>eval(totalMoney)){
 			alert("实付金额不可超过经费总金额！");
 			return;

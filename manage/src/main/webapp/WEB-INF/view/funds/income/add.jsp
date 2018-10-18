@@ -149,7 +149,7 @@
 		var projectId = $("select[name ='project.id']").val();
 		
 		if(projectId == '') {
-			alert("请选择隶属项目！");
+			alert("请选择项目！");
 			return ;
 		}
 		

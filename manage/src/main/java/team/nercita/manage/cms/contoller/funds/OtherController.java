@@ -78,9 +78,12 @@ public class OtherController {
 	
 	@RequestMapping("/edit")
 	public String edit(OtherFund otherFund, RedirectAttributes attr){
-		
-		otherService.doTransUpdateOther(otherFund);
-		otherService.doTransUpdateOther1(otherFund);
+		if(otherFund.getStatus()==null||otherFund.getStatus()==0||otherFund.getStatus()==2){
+			otherService.doTransUpdateOther1(otherFund);
+		}else if(otherFund.getStatus()==1){
+			otherService.doTransUpdateOther(otherFund);
+			otherService.doTransUpdateOther1(otherFund);
+		}
 		attr.addFlashAttribute("msg", "修改成功!");
 		return "redirect:/funds/other/list";
 	}

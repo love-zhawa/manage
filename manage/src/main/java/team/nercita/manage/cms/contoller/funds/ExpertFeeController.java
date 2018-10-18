@@ -93,8 +93,12 @@ public class ExpertFeeController {
 		
 		applyExpertFee.setCreateTime(oldApplyExpertFee.getCreateTime());
 		applyExpertFee.setCreator(oldApplyExpertFee.getCreator());
-		expertFeeService.doTransUpdateApplyExpertFee(applyExpertFee, user);
-		expertFeeService.doTransUpdateApplyExpertFee1(applyExpertFee, user);
+		if(applyExpertFee.getStatus()==null||applyExpertFee.getStatus()==0||applyExpertFee.getStatus()==2){
+			expertFeeService.doTransUpdateApplyExpertFee1(applyExpertFee, user);
+		}else if(applyExpertFee.getStatus()==1){
+			expertFeeService.doTransUpdateApplyExpertFee(applyExpertFee, user);
+			expertFeeService.doTransUpdateApplyExpertFee1(applyExpertFee, user);
+		}
 		
 		attr.addFlashAttribute("msg", "修改成功！");
 		return "redirect:/funds/expertfee/list";
@@ -172,8 +176,12 @@ public class ExpertFeeController {
 	@ResponseBody
 	public String del(String id){
 		try {
-			expertFeeService.doTransCommonDel(id);
-			expertFeeService.doTransCommonDel1(id);
+			ApplyExpertFee fee = expertFeeService.doJoinTransFindApplyExpertFee(id);
+			if(fee.getStatus()==null||fee.getStatus()==0||fee.getStatus()==2){
+				expertFeeService.doTransCommonDel1(id);
+			}else if(fee.getStatus()==1){
+				expertFeeService.doTransCommonDel(id);
+			}
 			return "0";
 		} catch (Exception e) {
 			return "1";

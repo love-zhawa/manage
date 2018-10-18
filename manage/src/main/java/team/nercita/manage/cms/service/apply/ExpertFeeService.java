@@ -34,6 +34,6 @@ public interface ExpertFeeService {
 	 
 	 public void doTransApplyAudit(String id, int status);
 	 
-	 public ApplyExpertFee doTransCommonDel(String id);
+	 public void doTransCommonDel(String id);
 	 public void doTransCommonDel1(String id);
 }

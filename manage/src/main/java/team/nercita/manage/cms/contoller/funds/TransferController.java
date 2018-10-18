@@ -90,8 +90,12 @@ public class TransferController {
 		applyTransfer.setCreator(oldApplyTransfer.getCreator());
 		applyTransfer.setCreateTime(oldApplyTransfer.getCreateTime());
 		
-		transferService.doTransUpdateApplyTransfer(applyTransfer);
-		transferService.doTransUpdateApplyTransfer1(applyTransfer);
+		if(applyTransfer.getStatus()==null||applyTransfer.getStatus()==0||applyTransfer.getStatus()==2){
+			transferService.doTransUpdateApplyTransfer1(applyTransfer);
+		}else if(applyTransfer.getStatus()==1){
+			transferService.doTransUpdateApplyTransfer(applyTransfer);
+			transferService.doTransUpdateApplyTransfer1(applyTransfer);
+		}
 		
 		attr.addFlashAttribute("msg", "修改成功！");
 		return "redirect:/funds/transfer/list";
@@ -140,9 +144,14 @@ public class TransferController {
 	@RequestMapping("/del")
 	@ResponseBody
 	public String del(String id){
+		ApplyTransfer applyTransfer = transferService.doJoinTransFindApplyTransfer(id);
 		try {
-			transferService.doTransCommonDel(id);
-			transferService.doTransCommonDel1(id);
+			if(applyTransfer.getStatus()==null||applyTransfer.getStatus()==0||applyTransfer.getStatus()==2){
+				transferService.doTransCommonDel1(id);
+			}else if(applyTransfer.getStatus()==1){
+				transferService.doTransCommonDel(id);
+				transferService.doTransCommonDel1(id);
+			}
 			return "0";
 		} catch (Exception e) {
 			return "1";

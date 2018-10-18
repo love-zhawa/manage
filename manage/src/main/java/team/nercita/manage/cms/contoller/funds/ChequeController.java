@@ -85,8 +85,13 @@ public class ChequeController {
 		
 		applyCheque.setCreateTime(oldApplyCheque.getCreateTime());
 		applyCheque.setCreator(oldApplyCheque.getCreator());
-		chequeService.doTransUpdateApplyCheque(applyCheque, user);
-		chequeService.doTransUpdateApplyCheque1(applyCheque, user);
+		
+		if(applyCheque.getStatus()==null||applyCheque.getStatus()==0||applyCheque.getStatus()==2){
+			chequeService.doTransUpdateApplyCheque1(applyCheque, user);
+		}else if(applyCheque.getStatus()==1){
+			chequeService.doTransUpdateApplyCheque(applyCheque, user);
+			chequeService.doTransUpdateApplyCheque1(applyCheque, user);
+		}
 		
 		attr.addFlashAttribute("msg", "修改成功！");
 		return "redirect:/funds/cheque/list";
@@ -130,9 +135,14 @@ public class ChequeController {
 	@RequestMapping("/del")
 	@ResponseBody
 	public String del(String id){
+		ApplyCheque applyCheque = chequeService.doJoinTransFindApplyCheque(id);
 		try {
-			chequeService.doTransCommonDel(id);
-			chequeService.doTransCommonDel1(id);
+			if(applyCheque.getStatus()==null||applyCheque.getStatus()==0||applyCheque.getStatus()==2){
+				chequeService.doTransCommonDel1(id);
+			}else if(applyCheque.getStatus()==1){
+				chequeService.doTransCommonDel(id);
+				chequeService.doTransCommonDel1(id);
+			}
 			return "0";
 		} catch (Exception e) {
 			return "1";

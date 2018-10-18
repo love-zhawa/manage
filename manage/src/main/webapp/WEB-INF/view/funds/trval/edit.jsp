@@ -272,6 +272,12 @@
 		var cheque = $("input[name ='cheque']").val();
 		var money = $("input[name ='money']").val();
 		var totalMoney = $("#totalMoney").val();
+		var projectId = $("select[name ='project.id']").val();
+		
+		if(projectId == '') {
+			alert("请选择支出项目！");
+			return ;
+		}
 		if(name == '') {
 			alert("出差人不可以为空！");
 			return ;
@@ -338,6 +344,10 @@
 			sum5 = parseFloat(sum5) + parseFloat(amounts5); 
 		} 
 		sums = sum1+sum2+sum3+sum4+sum5;
+		if(amounts1 == ''||amounts2 == ''||amounts3 == ''||amounts4 ==''||amounts5 == ''){
+			alert("明细金额不能为空!");
+			return;
+		}
 		if(eval(sums)>eval(totalMoney)){
 			alert("报销金额不可超过经费总金额！");
 			return;

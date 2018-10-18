@@ -41,7 +41,6 @@
         <th>序号</th>
         <th>财务编号</th>
 		<th>支出项目</th>
-        <th>标题</th>				
 		<th>申请时间</th>
 		<th>数据条数</th>
 		<th>状态</th>
@@ -52,7 +51,6 @@
       <td>${(page.currPage - 1) * page.pageRows + status.index+1}</td>
        <td>${record.project.financialNumber }</td>
 	  <td>${record.project.projectName }</td>
-      <td>${record.title}</td>
       <td><fmt:formatDate value="${record.applyDate }" pattern="yyyy-MM-dd"/></td>
       <td>${fn:length(record.detailList)}</td>
       <td>

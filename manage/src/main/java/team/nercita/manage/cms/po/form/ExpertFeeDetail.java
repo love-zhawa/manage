@@ -98,7 +98,7 @@ public class ExpertFeeDetail implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "id_card", length = 30)
+	@Column(name = "id_card")
 	public String getIdCard() {
 		return this.idCard;
 	}

@@ -167,7 +167,7 @@ public class ReimbursementController {
 	public String del(String id){
 		try {
 			reimbursementService.doTransCommonDel(id);
-			reimbursementService.doTransCommonDel1(id);
+			//reimbursementService.doTransCommonDel1(id);
 			return "0";
 		} catch (Exception e) {
 			return "1";
