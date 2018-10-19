@@ -8,6 +8,10 @@
 package team.nercita.manage.cms.contoller.funds;
 
 import java.math.BigDecimal;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,10 +68,28 @@ public class ExpertFeeController {
 	public ModelAndView toadd(){
 		ModelAndView view = new ModelAndView("funds/expertFee/add");
 		view.addObject("projectList", projectService.doJoinTransQueryProject());
-		view.addObject("zjlist", expertsService.doJoinTransQueryExperts());
+		
+		ArrayList<String> lists = new ArrayList<String>();
+		List<Experts> zjlist = expertsService.doJoinTransQueryExpertsname();
+		String strings[] = new String[zjlist.size()];
+
+		zjlist.toArray(strings);
+		strings = sort(strings);
+		for(String val : strings){
+			lists.add(val);
+		}
+		view.addObject("lists",lists);
 		return view;
 	}
-	
+
+	public static String[] sort(String [] data){
+		if(data==null || data.length==0){
+			return null;
+		}
+		Comparator<Object> comparator = Collator.getInstance(java.util.Locale.CHINA);
+		Arrays.sort(data, comparator);
+		return data;
+	}
 	@RequestMapping("/add")
 	public String add(ApplyExpertFee applyExpertFee, RedirectAttributes attr){
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
@@ -80,7 +102,17 @@ public class ExpertFeeController {
 	public ModelAndView toedit(@PathVariable String id){
 		ModelAndView view = new ModelAndView("funds/expertFee/edit");
 		view.addObject("projectList", projectService.doJoinTransQueryProject());
-		view.addObject("zjlist", expertsService.doJoinTransQueryExperts());
+		/*view.addObject("zjlist", expertsService.doJoinTransQueryExperts());*/
+		ArrayList<String> lists = new ArrayList<String>();
+		List<Experts> zjlist = expertsService.doJoinTransQueryExpertsname();
+		String strings[] = new String[zjlist.size()];
+
+		zjlist.toArray(strings);
+		strings = sort(strings);
+		for(String val : strings){
+			lists.add(val);
+		}
+		view.addObject("lists",lists);
 		view.addObject("expertFee", expertFeeService.doJoinTransFindApplyExpertFee(id));
 		return view;
 	}
@@ -146,10 +178,11 @@ public class ExpertFeeController {
 		return "redirect:/funds/expertfee/list";
 	}
 	
-	@RequestMapping("/view/{id}")
+	@RequestMapping("/view/{zjname}")
 	@ResponseBody
-	public Experts view(@PathVariable String id){
-		Experts zj = expertsService.doJoinTransFindExperts(id);
+	public Experts view(@PathVariable String zjname){
+		//Experts zj = expertsService.doJoinTransFindExperts(id);
+		Experts zj = expertsService.doJoinTransFindExpertsByName(zjname);
 		Experts view = new Experts();
 		view.setIdCard(zj.getIdCard());
 		view.setUnit(zj.getUnit());
@@ -161,10 +194,17 @@ public class ExpertFeeController {
 	}
 	@RequestMapping("/allzj")
 	@ResponseBody
-	public List<Experts> getAllZj(){
-		List<Experts> zj = expertsService.doJoinTransQueryExperts();
-		
-		return zj;
+	public ArrayList<String> getAllZj(){
+		ArrayList<String> lists = new ArrayList<String>();
+		List<Experts> zjlist = expertsService.doJoinTransQueryExpertsname();
+		String strings[] = new String[zjlist.size()];
+
+		zjlist.toArray(strings);
+		strings = sort(strings);
+		for(String val : strings){
+			lists.add(val);
+		}
+		return lists;
 	}
 	/**
 	 * 删除

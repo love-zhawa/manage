@@ -86,4 +86,18 @@ public class ExpertsServiceImpl extends BaseService implements ExpertsService {
 		String sql = "select p from Experts p";
 		return (List<Experts>) baseDao.findObjectList(sql, null);
 	}
+	@Override
+	public List<Experts> doJoinTransQueryExpertsname() {
+		String sql = "select userName from Experts";
+		return (List<Experts>) baseDao.findObjectList(sql, null);
+	}
+
+	@Override
+	public Experts doJoinTransFindExpertsByName(String zjname) {
+		String sql = "select p from Experts p where p.userName = :ZJNAME";
+		Map<String, Object> queryMap = new HashMap<String, Object>();
+		queryMap.put("ZJNAME",zjname);
+		Experts zj = baseDao.findObject(sql, queryMap);
+		return zj;
+	}
 }

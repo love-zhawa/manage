@@ -31,7 +31,7 @@
         </shiro:hasPermission>
         <li>搜索：</li>
         <li>
-          <input type="text" placeholder="请输入标题" name="title" class="input" style="width:200px; line-height:17px;display:inline-block"  value="${title }" />
+          <%-- <input type="text" placeholder="请输入标题" name="title" class="input" style="width:200px; line-height:17px;display:inline-block"  value="${title }" /> --%>
           <input type="text" placeholder="请输入关键字" name="keyWords" class="input" style="width:200px; line-height:17px;display:inline-block"  value="${keyWords }" />
           <a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a></li>
       </ul>

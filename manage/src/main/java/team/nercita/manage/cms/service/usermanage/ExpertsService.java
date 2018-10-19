@@ -27,4 +27,7 @@ public interface ExpertsService {
 	public void doTransUpdateExperts(Experts experts);
 	
 	public List<Experts> doJoinTransQueryExperts();
+	public List<Experts> doJoinTransQueryExpertsname();
+	
+	public Experts doJoinTransFindExpertsByName(String zjname);
 }

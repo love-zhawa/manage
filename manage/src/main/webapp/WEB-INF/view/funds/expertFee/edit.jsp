@@ -93,10 +93,10 @@
 				<c:forEach items="${expertFee.detailList}" var="item" varStatus="status">
 					<tr id="item${status.index}">
 						<td><%-- <input type="text" class="input" name="detailList[${status.index}].name" value="${item.name }"> --%>
-							<select name="detailList[${status.index}].zjid" class="input w50" style="width: 165px;" onchange="change()">
+							<select name="detailList[${status.index}].name" class="input w50" style="width: 165px;" onchange="change()">
 					          	<option value="">全部</option>
-					          	<c:forEach items="${zjlist }" var="zj">
-					          		<option value="${zj.id }"<c:if test="${item.zjid eq zj.id }">selected="selected"</c:if>>${zj.userName }</option>
+					          	<c:forEach items="${lists }" var="lists">
+					          		<option value="${lists }"<c:if test="${item.name eq lists }">selected="selected"</c:if>>${lists }</option>
 					          	</c:forEach>
 					          </select>
 						</td>
@@ -145,9 +145,9 @@
 	function plusTR(){
 	  num ++;
 	  $.post("funds/expertfee/allzj",{},function(result){
-		var tr = "<tr id='item"+num+"'><td><select name='detailList[" + num + "].zjid' class='input w50' style='width: 165px;' onchange='change()'><option value=''>全部</option>";
+		var tr = "<tr id='item"+num+"'><td><select name='detailList[" + num + "].name' class='input w50' style='width: 165px;' onchange='change()'><option value=''>全部</option>";
 		for(var i in result){
-			tr+="<option value='"+result[i].id+"'>"+result[i].userName+"</option>";
+			tr+="<option value='"+result[i]+"'>"+result[i]+"</option>";
 		}
 		
 		tr+="</select></td><td><input type='text' class='input' name='detailList[" + num + "].idCard' id='idCard" + num + "'></td><td><input type='text' class='input' name='detailList[" + num + "].unit' id='unit" + num + "'></td><td><input type='text' class='input' name='detailList[" + num + "].title' id='title" + num + "'></td><td><input type='text' class='input' name='detailList[" + num + "].days' ></td><td><input type='text' class='input' name='detailList[" + num + "].bankCard' id='bankCard" + num + "'></td><td><input type='text' class='input' name='detailList[" + num + "].baneName' id='baneName" + num + "'></td><td><input type='text' class='input' name='detailList[" + num + "].amount' ></td><td><img src='images/minus.png' style='cursor:pointer;' onclick='minusTR("+ num +")'/></td></tr>";
@@ -188,8 +188,8 @@
                 tr[i].getElementsByTagName("td")[j].onclick = function(){
                 	var i = this.parentNode.index-1;
                 	//alert(i);
-					var zjid = $("select[name='detailList["+i+"].zjid']").val();
-                    if(zjid == '') {
+					var zjname = $("select[name='detailList["+i+"].name']").val();
+                    if(zjname == '') {
 				   		$(eval("idCard"+i)).val("");
 					    $(eval("unit"+i)).val("");
 					    $(eval("title"+i)).val("");
@@ -197,7 +197,7 @@
 					    $(eval("baneName"+i)).val("");
 				    }
 				
-					$.post("funds/expertfee/view/" + zjid,{},function(result){
+					$.post("funds/expertfee/view/" + zjname,{},function(result){
 					    $(eval("idCard"+i)).val(result.idCard);
 					    $(eval("unit"+i)).val(result.unit);
 					    $(eval("title"+i)).val(result.title);

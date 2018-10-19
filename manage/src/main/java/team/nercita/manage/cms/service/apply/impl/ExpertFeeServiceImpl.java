@@ -75,7 +75,7 @@ public class ExpertFeeServiceImpl extends BaseService implements ExpertFeeServic
 		String keyWords = "";
 		if(detailList != null) {
 			for (ExpertFeeDetail expertFeeDetail : detailList) {
-				keyWords += expertFeeDetail.getZjid() + "|" + expertFeeDetail.getIdCard() 
+				keyWords += expertFeeDetail.getName() + "|" + expertFeeDetail.getIdCard() 
 					+ "|" +expertFeeDetail.getUnit() + "|" + expertFeeDetail.getTitle();
 			}
 		}
@@ -86,7 +86,7 @@ public class ExpertFeeServiceImpl extends BaseService implements ExpertFeeServic
 		
 		if(detailList != null) {
 			for (ExpertFeeDetail detail : detailList) {
-				Experts zj = expertsService.doJoinTransFindExperts(detail.getZjid());
+				Experts zj = expertsService.doJoinTransFindExpertsByName(detail.getName());
 				detail.setName(zj.getUserName());
 				detail.setZjid(zj.getId());
 				detail.setApplyExpertFee(applyExpertFee);
@@ -216,7 +216,7 @@ public class ExpertFeeServiceImpl extends BaseService implements ExpertFeeServic
 		
 		if(newDetailList != null){
 			for (ExpertFeeDetail expertFeeDetail : newDetailList) {
-				keyWords += expertFeeDetail.getZjid() + "|" + expertFeeDetail.getIdCard() 
+				keyWords += expertFeeDetail.getName() + "|" + expertFeeDetail.getIdCard() 
 					+ "|" +expertFeeDetail.getUnit() + "|" + expertFeeDetail.getTitle();
 			}
 		}
@@ -227,8 +227,9 @@ public class ExpertFeeServiceImpl extends BaseService implements ExpertFeeServic
 		
 		if(newDetailList != null){
 			for (ExpertFeeDetail detail : newDetailList) {
-				Experts zj = expertsService.doJoinTransFindExperts(detail.getZjid());
+				Experts zj = expertsService.doJoinTransFindExpertsByName(detail.getName());
 				detail.setName(zj.getUserName());
+				detail.setZjid(zj.getId());
 				detail.setApplyExpertFee(applyExpertFee);
 				detail.setId(Generator.getUUID());
 				detail.setUser(user);
