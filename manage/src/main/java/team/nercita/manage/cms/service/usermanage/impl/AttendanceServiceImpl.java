@@ -510,7 +510,8 @@ public class AttendanceServiceImpl extends BaseService implements AttendanceServ
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		String sql = "select count(a) from Attendance a where a.user.id = :USERID and a.dkTime <= :ENDTIME and a.dkTime >= :BEGINTIME";
+		String sql = "select count(*) from Attendance a,workingcalendar w where w.status = :ZT and a.user.id = :USERID and a.dkTime <= :ENDTIME and a.dkTime >= :BEGINTIME and a.dkTime = w.time";
+		paramMap.put("ZT", 1);
 		paramMap.put("USERID", userid);
 		paramMap.put("BEGINTIME", begintime);
 		paramMap.put("ENDTIME",endtime);
