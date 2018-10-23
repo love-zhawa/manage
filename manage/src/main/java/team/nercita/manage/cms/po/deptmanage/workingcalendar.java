@@ -22,10 +22,10 @@ public class workingcalendar implements java.io.Serializable {
 	private Integer status;//0节假日，1工作日
 	private String isfj;//是什么节假日
 	
-	private String creator;
+	/*private String creator;
 	private Date createTime;
 	private String modifier;
-	private Date modifyTime;
+	private Date modifyTime;*/
 
 	@Id
 	@Column(name = "id", unique = true, nullable = false, length = 32)
@@ -69,7 +69,7 @@ public class workingcalendar implements java.io.Serializable {
 		this.time = time;
 	}
 
-	@Column(name = "creator", length = 20)
+	/*@Column(name = "creator", length = 20)
 	public String getCreator() {
 		return this.creator;
 	}
@@ -103,5 +103,5 @@ public class workingcalendar implements java.io.Serializable {
 
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
-	}
+	}*/
 }

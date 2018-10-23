@@ -36,7 +36,7 @@ public class Student implements java.io.Serializable {
 	
 	private String username;
 	private Integer status;
-	
+	private String tutor;
 	private String creator;
 	private Date createTime;
 	private String modifier;
@@ -51,6 +51,15 @@ public class Student implements java.io.Serializable {
 	public void setBzlist(List<Studentbz> bzlist) {
 		this.bzlist = bzlist;
 	}
+	@Column(name = "tutor")
+	public String getTutor() {
+		return tutor;
+	}
+
+	public void setTutor(String tutor) {
+		this.tutor = tutor;
+	}
+
 	@Column(name = "bztime")
 	public Date getBztime() {
 		return bztime;

@@ -28,8 +28,9 @@ h1 {text-align: center;margin-bottom: 20px;}
 <body>
 	 <form action="student/add" method="post" class="form-x" id="form-article-add" enctype="multipart/form-data">
 	<!--  <h1 class="title">补助</h1> -->
-     <input type="hidden" name="user.id" id="usersid" value="${user.id}">
+     <input type="hidden" name="user.id" id="usersid" value="${userid}">
      <input type="hidden" name="username" value="${user.name}">
+     <input type="hidden" name="tutor" id="tutor" value="${tutor}">
 		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1" style="width: 1000px">
 		 <div class="form-group" style="margin: 1% 0 0 17%;">
 	        <div class="label">
@@ -63,7 +64,7 @@ h1 {text-align: center;margin-bottom: 20px;}
       	</tr>
         <tr style="height: 38px;">
           <th style="padding-top: 9px;">部门</th>
-          <td style="padding-top: 9px;" colspan="8">${user.userGroup.groupName}</td>
+          <td style="padding-top: 9px;" colspan="8">${groupname}</td>
         </tr>
         <tr style="height: 38px;">
       		<th style="width:5%;padding-top: 9px;">姓名</th>
@@ -89,7 +90,15 @@ h1 {text-align: center;margin-bottom: 20px;}
 		          <td>${user.idCard }</td>
 		          <td>${user.bank }</td>
 		          <td>${user.cardid }</td>
-		          <td><input type="text" class="input" name="bzlist[${i.index }].ts" style="width:90px;" readonly></td>
+		          <td>
+		          <c:if test="${userid eq '891b0aa0b95647e6ae5087bcdfc38d72' }">
+		          		<input type="text" class="input" name="bzlist[${i.index }].ts" style="width:90px;" onblur="myFunctions()">
+		          </c:if>
+		          <c:if test="${userid ne '891b0aa0b95647e6ae5087bcdfc38d72' }">
+		           		<input type="text" class="input" name="bzlist[${i.index }].ts" style="width:90px;" readonly>
+		          </c:if>
+		          
+		          </td>
 		          <td><input type="text" class="input" name="bzlist[${i.index }].money" id="one${i.index }" autocomplete="off" onblur="myFunction()"></td>
 		          <td><input type="text" class="input" name="bzlist[${i.index }].qtmoney" id="two${i.index }" readonly></td>
 		          <td><input type="text" class="input" name="bzlist[${i.index }].summoney" id="sum${i.index }" readonly></td>
@@ -111,16 +120,17 @@ h1 {text-align: center;margin-bottom: 20px;}
 	  laydate.render({
 	    elem: '#test3'
 	    ,type: 'month'
+	    ,value: new Date()
 	    ,done: function(value, date){
 	    	var _list = new Array();
-	    	var usersid = $("#usersid").val();//当前登录用户（老师）
+	    	var tutor = $("#tutor").val();//（老师）
 			var tr =$('#items').find('tr');
 			var len = tr.length;
 			for(var i = 0;i < len;i++){
 				var userid = tr.eq(i).find('td').eq(0).find("input").val();
 				_list[i]=userid;
 			}
-		    $.post("student/cx",{"usersid":usersid,"year":JSON.stringify(date.year),"month":JSON.stringify(date.month),"date":1,"userids":_list},function(result){
+		    $.post("student/cx",{"tutor":tutor,"year":JSON.stringify(date.year),"month":JSON.stringify(date.month),"date":1,"userids":_list},function(result){
 				 if(result!=null&&result!=''){
 					 $('#items').find('tr').find("input").attr("disabled",false);
 					 $("#tj").attr("disabled",false);
@@ -137,6 +147,33 @@ h1 {text-align: center;margin-bottom: 20px;}
 			}); 
 		  }
 	  });
+	  $(function(){
+		var time = $("#test3").val();
+		
+		var _list = new Array();
+    	var tutor = $("#tutor").val();//（老师）
+		var tr =$('#items').find('tr');
+		var len = tr.length;
+		for(var i = 0;i < len;i++){
+			var userid = tr.eq(i).find('td').eq(0).find("input").val();
+			_list[i]=userid;
+		}
+	    $.post("student/cxs",{"tutor":tutor,"time":time,"date":1,"userids":_list},function(result){
+			 if(result!=null&&result!=''){
+				 $('#items').find('tr').find("input").attr("disabled",false);
+				 $("#tj").attr("disabled",false);
+				 for(var i = 0;i < len;i++){
+					tr.eq(i).find('td').eq(5).find("input").val(result[i]);
+					tr.eq(i).find('td').eq(7).find("input").val(result[i]*8);
+				}
+			 }else{
+			 	alert("本月已申请补助，请勿重复填写！");
+			 	$('#items').find('tr').find("input").attr("disabled",true);
+			 	$("#tj").attr("disabled",true);
+			 }
+			 
+		}); 
+	  });
 	  function myFunction(){
 		var sum = 0.0;
 		var tr =$('#items').find('tr');
@@ -150,6 +187,17 @@ h1 {text-align: center;margin-bottom: 20px;}
 		$("#summoney").val(sum);
 		$("#dx").html((sum).numToChinese());
 	}
+    //改天数   补助改
+     function myFunctions(){
+ 		var sum = 0.0;
+ 		var tr =$('#items').find('tr');
+ 		var len = tr.length;
+ 		for(var i = 0;i < len;i++){
+ 			var ts = tr.eq(i).find('td').eq(5).find("input").val();
+ 			tr.eq(i).find('td').eq(7).find("input").val(ts*8);
+ 		}
+ 		myFunction();
+ 	}
 	 //把小数前的数分成4位处理，不足位添0，例如：123456 => 0012,3456
     if (!Number.prototype.cutNum) {
         Number.prototype.cutNum = function () { //判断Number对象是否有cutNum方法

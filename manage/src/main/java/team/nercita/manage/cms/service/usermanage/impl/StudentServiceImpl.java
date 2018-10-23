@@ -20,7 +20,7 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 
 	@Override
 	public List<Student> doJoinTransFindUserByTutorName(String tutor) {
-		String sql = "select u from Student u left join fetch u.user left join fetch u.userGroup left join fetch u.project where u.username = :TUTOR";
+		String sql = "select u from Student u left join fetch u.user left join fetch u.userGroup left join fetch u.project where u.tutor = :TUTOR";
 		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("TUTOR", tutor);
@@ -31,7 +31,8 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 	@Override
 	public void doTransSaveStu(Student stu) {
 		stu.setId(Generator.getUUID());
-		stu.setUser(stu.getUser());
+		//stu.setUser(stu.getUser());
+		stu.setTutor(stu.getTutor());
 		stu.setProject(stu.getProject());
 		stu.setSummoney(stu.getSummoney());
 		stu.setBztime(stu.getBztime());
@@ -66,6 +67,7 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 	@Override
 	public void doTransUpdateStu(Student stu) {
 		stu.setUser(stu.getUser());
+		stu.setTutor(stu.getTutor());
 		stu.setProject(stu.getProject());
 		stu.setSummoney(stu.getSummoney());
 		stu.setBztime(stu.getBztime());
@@ -157,13 +159,13 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 
 	@Override
 	public List<Student> doJoinTransFindStudent() {
-		String sql = "select u from Student u left join fetch u.user left join fetch u.userGroup left join fetch u.project";
+		String sql = "select u from Student u left join fetch u.user left join fetch u.userGroup left join fetch u.project order by u.endTime desc";
 		List<Student> lists = (List<Student>) baseDao.findObjectList(sql, null);
 		return lists;
 	}
 
 	@Override
-	public List<Student> doJoinTransFindbz(String userid,Date bztime) {
+	public List<Student> doJoinTransFindbz(String tutor,Date bztime) {
 		Map<String,Object> paramMap = new HashMap();
 		Date begintime = null;
 		Date endtime = null;
@@ -173,8 +175,8 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		String sql = "select s from Student s where s.user.id = :USERID and s.beginTime = :BEGINTIME and s.endTime = :ENDTIME";
-		paramMap.put("USERID", userid);
+		String sql = "select s from Student s where s.tutor = :TUTOR and s.beginTime = :BEGINTIME and s.endTime = :ENDTIME";
+		paramMap.put("TUTOR", tutor);
 		paramMap.put("BEGINTIME", begintime);
 		paramMap.put("ENDTIME",endtime);
 		List<Student> lists = (List<Student>) baseDao.findObjectList(sql, paramMap);

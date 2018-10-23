@@ -23,11 +23,12 @@
     <div class="panel-head"><strong class="icon-reorder">&nbsp;&nbsp;内容列表</strong></div>
     <div class="padding border-bottom">
       <ul class="search" style="padding-left:10px;">
-      <c:if test="${username eq tutor }">
-       <shiro:hasPermission name="student_add">
-        	<li> <a class="button border-main icon-plus-square-o" href="javascript:void(0);" onclick="toadd()">添加</a> </li>
+      
+        <shiro:hasPermission name="student_add">
+	        <c:if test="${username eq tutor || user.id eq '891b0aa0b95647e6ae5087bcdfc38d72'}">
+	        	<li><a class="button border-main icon-plus-square-o" href="javascript:void(0);" onclick="toadd()">添加</a> </li>
+	        </c:if>
         </shiro:hasPermission>
-      </c:if>
         <li>搜索：</li>
         <li>
           <select name="tutor" class="input" style="width:250px; line-height:15px;display:inline-block" >
@@ -55,7 +56,7 @@
        <c:forEach items="${lists}" var="stu" varStatus="status">
 			<tr>
 	          <td>${status.index+1}</td>
-	          <td><u style="cursor:pointer" class="text-primary" onclick="detail('${stu.id}')">${stu.username }</u></td>
+	          <td><u style="cursor:pointer" class="text-primary" onclick="detail('${stu.id}')">${stu.tutor }</u></td>
 	          <td>${fn:substring(stu.endTime,5,7)}月学生补助</td>
 	          <td>${stu.project.projectName }</td>
 	          <td>${stu.project.financialNumber }</td>
@@ -74,9 +75,11 @@
 	          	<div class="button-group">
 	          	<c:if test="${stu.status == null || stu.status == 2}">
 		          	<shiro:hasPermission name="student_sub">
-		       			<a class="button border-green" onclick="subaudit('${stu.id}')" href="javascript:;">
-			       			<span class="icon-rocket"></span> 提交审核
-			       		</a>
+			          	<c:if test="${user.id ne '891b0aa0b95647e6ae5087bcdfc38d72' }">
+				          	<a class="button border-green" onclick="subaudit('${stu.id}')" href="javascript:;">
+				       			<span class="icon-rocket"></span> 提交审核
+				       		</a>
+			          	</c:if>
 		       		</shiro:hasPermission>
 		       		<shiro:hasPermission name="student_edit">
 		          		<a class="button border-main" onclick="edit('${stu.id}')" href="javascript:;">
@@ -98,7 +101,7 @@
 	          		</shiro:hasPermission>
 	          		</c:if>
 	       		</c:if>
-	       		<c:if test="${stu.status == 1 }">
+	       		<c:if test="${stu.status == 1 || user.id eq '891b0aa0b95647e6ae5087bcdfc38d72'}">
 	       			<shiro:hasPermission name="student_print">
 			          	<a class="button border-yellow" onclick="toprint('${stu.id}')" href="javascript:;">
 			       			<span class="icon-print"></span> 打印
@@ -120,7 +123,12 @@
 			$("#searchForm").submit();
 		}
 		function toadd(){
-			window.location.href="student/toadd";
+			var tutor = $("select[name='tutor']").val();
+			if(tutor == ''){
+				alert("请选择导师！");
+				return;
+			}
+			window.location.href="student/toadd/"+tutor;
 		}
 		function edit(id){
 			window.location.href = "student/toedit/"+id;

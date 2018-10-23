@@ -77,13 +77,19 @@ public class StudentController {
 		return view;
 	}
 	
-	@RequestMapping("/toadd")
-	public ModelAndView toadd(){
+	@RequestMapping("/toadd/{tutor}")
+	public ModelAndView toadd(@PathVariable String tutor){
 		ModelAndView view = new ModelAndView("deptmanage/student/add");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		
 		view.addObject("user", user);
-		view.addObject("lists",userService.doJoinTransQueryUserByTutor(user.getName()));
+		view.addObject("userid", user.getId());
+		view.addObject("tutor", tutor);
+		List<User> lists = userService.doJoinTransQueryUserByTutor(tutor);//学生列表
+		if(lists.size()>0){
+			view.addObject("groupname",lists.get(0).getUserGroupName());
+		}
+		view.addObject("lists",lists);
 		view.addObject("projectList", projectService.doJoinTransQueryProject());
 		return view;
 	}
@@ -100,9 +106,16 @@ public class StudentController {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		
 		view.addObject("user", user);
-		view.addObject("lists",userService.doJoinTransQueryUserByTutor(user.getName()));
+		view.addObject("userid", user.getId());
 		view.addObject("projectList", projectService.doJoinTransQueryProject());
-		view.addObject("stu", stuService.doJoinTransFindUserById(id));
+		Student stu = stuService.doJoinTransFindUserById(id);
+		if(stu!=null){
+			List<User> lists = userService.doJoinTransQueryUserByTutor(stu.getTutor());//学生列表
+			if(lists.size()>0){
+				view.addObject("groupname",lists.get(0).getUserGroupName());
+			}
+		}
+		view.addObject("stu", stu);
 		return view;
 	}
 	@RequestMapping("/edit")
@@ -162,7 +175,7 @@ public class StudentController {
 	 */
 	@RequestMapping("/cx")
 	@ResponseBody
-	public List<String> cx(String stuid,String usersid,String year,String month,String date,@RequestParam("userids[]") List<Object> userids) throws ParseException{
+	public List<String> cx(String stuid,String tutor,String year,String month,String date,@RequestParam("userids[]") List<Object> userids) throws ParseException{
 		List<String> lists = new ArrayList<String>();
 		String bztime = year+"-"+month+"-"+date;
 		if(userids.size()>0){
@@ -172,14 +185,42 @@ public class StudentController {
 			}
 		}
 		if(stuid==null||stuid.equals("")){//添加
-			List<Student> stulist = stuService.doJoinTransFindbz(usersid, DateTime.parse(bztime).toDate());
+			List<Student> stulist = stuService.doJoinTransFindbz(tutor, DateTime.parse(bztime).toDate());
 			if(stulist.size()>0){
 				return null;
 			}else{
 				return lists;
 			}
 		}else{//修改时
-			List<Student> stulist = stuService.doJoinTransFindbz(stuid,usersid, DateTime.parse(bztime).toDate());
+			List<Student> stulist = stuService.doJoinTransFindbz(stuid,tutor, DateTime.parse(bztime).toDate());
+			if(stulist.size()>0){
+				return null;
+			}else{
+				return lists;
+			}
+		}
+		
+	}
+	@RequestMapping("/cxs")
+	@ResponseBody
+	public List<String> cxs(String stuid,String tutor,String time,String date,@RequestParam("userids[]") List<Object> userids) throws ParseException{
+		List<String> lists = new ArrayList<String>();
+		String bztime = time+"-"+date;
+		if(userids.size()>0){
+			for (int i = 0; i < userids.size(); i++) {
+				int ts = dkService.doJoinTransFindTs(userids.get(i).toString(),DateTime.parse(bztime).toDate());
+				lists.add(String.valueOf(ts));
+			}
+		}
+		if(stuid==null||stuid.equals("")){//添加
+			List<Student> stulist = stuService.doJoinTransFindbz(tutor, DateTime.parse(bztime).toDate());
+			if(stulist.size()>0){
+				return null;
+			}else{
+				return lists;
+			}
+		}else{//修改时
+			List<Student> stulist = stuService.doJoinTransFindbz(stuid,tutor, DateTime.parse(bztime).toDate());
 			if(stulist.size()>0){
 				return null;
 			}else{

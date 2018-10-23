@@ -90,14 +90,14 @@
 	          		<c:if test="${workPlan.evaluate == 1 || workPlan.evaluate == 2}">
 		          		
 		          		<shiro:hasPermission name="plan_edit">
-		          			<c:if test="${sessionScope.user.id == workPlan.distUser.id }">
+		          			<c:if test="${sessionScope.user.id == workPlan.distUser.id}">
 				          		<a class="button border-main" onclick="edit('${workPlan.id}')" href="javascript:;">
 				          			<span class="icon-edit"></span> 修改
 				          		</a>
 				          	</c:if>
 		          		</shiro:hasPermission>
 		          		<shiro:hasPermission name="plan_reply">
-				          <c:if test="${sessionScope.user.id == workPlan.distUser.id }">
+				          <c:if test="${sessionScope.user.id == workPlan.distUser.id ||sessionScope.user.id == workPlan.user.id}">
 			          		  <a class="button border-yellow" onclick="progress('${workPlan.id}')" href="javascript:;">
 			          			<span class="icon-rocket"></span> 添加节点
 			          		  </a>
