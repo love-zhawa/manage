@@ -80,7 +80,7 @@
 		          <td>${bz.user.idCard }</td>
 		          <td>${bz.user.bank }</td>
 		          <td>${bz.user.cardid }</td>
-		          <td></td>
+		          <td>${bz.ts }</td>
 		          <td>${bz.money }</td>
 		          <td>${bz.qtmoney }</td>
 		          <td>${bz.summoney }</td>
