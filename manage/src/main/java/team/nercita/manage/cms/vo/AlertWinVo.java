@@ -25,6 +25,7 @@ public class AlertWinVo implements Serializable {
 	private String str3;
 	private String str5;
 	private String str6;
+	private String str7;
 
 	public String getStr1() {
 		return str1;
@@ -72,6 +73,14 @@ public class AlertWinVo implements Serializable {
 
 	public void setStr6(String str6) {
 		this.str6 = str6;
+	}
+
+	public String getStr7() {
+		return str7;
+	}
+
+	public void setStr7(String str7) {
+		this.str7 = str7;
 	}
 	
 

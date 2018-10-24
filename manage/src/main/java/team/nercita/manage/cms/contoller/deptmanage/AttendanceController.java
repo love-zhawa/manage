@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,6 +43,7 @@ import team.nercita.manage.cms.service.apply.TrvalService;
 import team.nercita.manage.cms.service.sign.SignService;
 import team.nercita.manage.cms.service.usermanage.AttendanceService;
 import team.nercita.manage.cms.service.usermanage.UserService;
+import team.nercita.manage.cms.vo.AlertWinVo;
 
 /**
  * 靠前管理
@@ -65,7 +67,8 @@ public class AttendanceController {
 	TrvalService ccService;
 	@Autowired
 	OvertimeService jbService;
-	
+	@Autowired
+	AttendanceService dkService;
 	@RequestMapping("/stat")
 	public ModelAndView stat(HttpServletRequest request,Integer goPage,@ModelAttribute(value="startTime") String startTime) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
@@ -89,10 +92,6 @@ public class AttendanceController {
 		List<Attendance> dkmx = attendanceService.doJoinTransAtts(date);
 		view.addObject("dkmx",dkmx);
 		
-		/*List<User> userlist = userService.doJoinTransQueryUserLists(date);
-		request.setAttribute("userlist",userlist);
-		Map<String,Object> dkmap = new HashMap<String, Object>();
-		Map<String,Object> dkmap1 = new HashMap<String, Object>();*/
 		Map<String,Object> qjmap = new HashMap<String, Object>();
 		Map<String,Object> ccmap = new HashMap<String, Object>();
 		Map<String,Object> jbmap = new HashMap<String, Object>();
@@ -128,6 +127,53 @@ public class AttendanceController {
 		String day = "3000-01-01 00:00:00";
 		request.setAttribute("day",day);
 		return view;
+	}
+	@RequestMapping("/tj")
+	@ResponseBody
+	public List<AlertWinVo> tj(HttpServletRequest request,@ModelAttribute(value="beginTime") String beginTime,@ModelAttribute(value="endTime") String endTime) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("beginTime", beginTime);
+		paramMap.put("endTime", endTime);
+		
+		Date begin = DateTime.parse(DateTime.now().minusDays(30).toString("yyyy-MM-dd")).toDate();
+		Date end = DateTime.parse(DateTime.now().minusDays(0).toString("yyyy-MM-dd")).toDate();
+		String dataTime = DateTime.now().minusDays(30).toString("yyyy-MM-dd");
+		String dataTimes = DateTime.now().minusDays(0).toString("yyyy-MM-dd");
+		if(StringUtils.isNotBlank(beginTime)) {
+			begin = DateTime.parse(beginTime).toDate();
+			dataTime = beginTime;
+		}
+		if(StringUtils.isNotBlank(endTime)) {
+			end = DateTime.parse(endTime).toDate();
+			dataTimes = endTime;
+		}
+		List<Attendance> dkmx = attendanceService.doJoinTransAtts(begin);//打卡明细
+		List<AlertWinVo> voList = new ArrayList();
+		if(dkmx.size()>0){
+			for (int i = 0; i < dkmx.size(); i++) {
+				int ts = dkService.doJoinTransFindTs2(dkmx.get(i).getUser().getId(),begin,end);//出勤天数
+				int gzr = dkService.doJoinTransFindTs2(begin,end);//工作日
+				int cdts = dkService.doJoinTransFindCdts(dkmx.get(i).getUser().getId(),begin,end);//迟到天数
+				int ztts = dkService.doJoinTransFindZtts(dkmx.get(i).getUser().getId(),begin,end);//早退天数
+				List<ApplyLeave> qjtss = qjService.doJoinTransFindTs(dkmx.get(i).getUser().getId(),begin,end);//请假天数
+				int qjts = 0;
+				if(qjtss.size()>0){
+					for (ApplyLeave app : qjtss) {
+						qjts+=app.getTs();
+					}
+				}
+				
+				AlertWinVo vo = new AlertWinVo();
+				vo.setStr1(dkmx.get(i).getUser().getName());
+				vo.setStr2(String.valueOf(ts));
+				vo.setStr3(String.valueOf(cdts));
+				vo.setStr4(String.valueOf(ztts));
+				vo.setStr5(String.valueOf(qjts));
+				vo.setStr6(String.valueOf(gzr-ts));
+				voList.add(vo);
+			}
+		}
+		return voList;
 	}
 	
 	@RequestMapping("/toadd")

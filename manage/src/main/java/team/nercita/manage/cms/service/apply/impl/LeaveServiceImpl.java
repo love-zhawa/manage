@@ -37,6 +37,7 @@ import team.nercita.manage.cms.util.Page;
 @Component
 public class LeaveServiceImpl extends BaseService implements LeaveService {
 	static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy,MM,dd");
 	@Override
 	public Map<String, Object> doJoinTransFindApplyLeaveList(Integer goPage, Map<String, Object> paramMap) {
 		String userName = MapUtils.getString(paramMap, "userName");
@@ -77,6 +78,19 @@ public class LeaveServiceImpl extends BaseService implements LeaveService {
 	@Override
 	public void doTransSaveApplyLeave(ApplyLeave applyLeave) {
 		applyLeave.setId(Generator.getUUID());
+		String begin = sdf.format(applyLeave.getBeginTime()).toString();
+		String end = sdf.format(applyLeave.getEndTime()).toString();
+		Date calr1;
+		Date calr2;
+		try {
+			calr1 = sdf.parse(begin);
+			calr2 = sdf.parse(end);
+			Long n=calr2.getTime()-calr1.getTime();
+			int a=(int)(n/(1000*60*60*24));
+			applyLeave.setTs(a);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		baseDao.save(applyLeave);
 	}
@@ -91,6 +105,19 @@ public class LeaveServiceImpl extends BaseService implements LeaveService {
 
 	@Override
 	public void doTransUpdateApplyLeave(ApplyLeave applyLeave) {
+		String begin = sdf.format(applyLeave.getBeginTime()).toString();
+		String end = sdf.format(applyLeave.getEndTime()).toString();
+		Date calr1;
+		Date calr2;
+		try {
+			calr1 = sdf.parse(begin);
+			calr2 = sdf.parse(end);
+			Long n=calr2.getTime()-calr1.getTime();
+			int a=(int)(n/(1000*60*60*24));
+			applyLeave.setTs(a);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		baseDao.update(applyLeave);
 	}
 	
@@ -102,6 +129,17 @@ public class LeaveServiceImpl extends BaseService implements LeaveService {
 		paramMap.put("NOWDATE", date);
 		List<ApplyLeave> lists = (List<ApplyLeave>) baseDao.findObjectList(sql, paramMap);
 		
+		return lists;
+	}
+
+	@Override
+	public List<ApplyLeave> doJoinTransFindTs(String userid, Date begin, Date end) {
+		Map<String,Object> paramMap = new HashMap();
+		String sql = "select a from ApplyLeave a where a.user.id = :USERID and a.applyTime <= :ENDTIME and a.applyTime >= :BEGINTIME";
+		paramMap.put("USERID", userid);
+		paramMap.put("BEGINTIME", begin);
+		paramMap.put("ENDTIME",end);
+		List<ApplyLeave> lists = (List<ApplyLeave>) baseDao.findObjectList(sql, paramMap);
 		return lists;
 	}
 	

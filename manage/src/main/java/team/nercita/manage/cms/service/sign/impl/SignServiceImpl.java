@@ -40,6 +40,7 @@ import team.nercita.manage.cms.util.Generator;
 @Component
 public class SignServiceImpl extends BaseService implements SignService {
 	static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	SimpleDateFormat sdf = new SimpleDateFormat("HH");
 	/*@SuppressWarnings("unchecked")
 	@Override
 	public void doTransSaveSign(User user, String addr) {
@@ -137,6 +138,13 @@ public class SignServiceImpl extends BaseService implements SignService {
 		if(attendanceList != null && attendanceList.size() >= 1) {//签退
 			for (Attendance attendance : attendanceList) {
 				Date nowDate = new Date();
+				Integer xb = Integer.parseInt(sdf.format(nowDate).toString());
+				if(xb<17){
+					attendance.setIszt(1);
+				}else{
+					attendance.setIszt(0);
+				}
+				
 				attendance.setAddr(attendance.getAddr());
 				attendance.setAddr2(addr);
 				attendance.setTimes(2);
@@ -151,6 +159,13 @@ public class SignServiceImpl extends BaseService implements SignService {
 			Date nowDate = new Date();
 			
 			Attendance attendance = new Attendance();
+			Integer sb = Integer.parseInt(sdf.format(nowDate).toString());
+			if(sb>9){
+				attendance.setIscd(1);
+			}else{
+				attendance.setIscd(0);
+			}
+			
 			attendance.setId(Generator.getUUID());
 			attendance.setUser(user);
 			attendance.setAddr(addr);

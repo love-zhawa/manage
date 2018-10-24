@@ -29,6 +29,7 @@ h1 {text-align: center;margin-bottom: 20px;}
 	<form action="apply/online/leave/edit" method="post" class="form-x" id="form-article-add" >
 	 <input name="applyType" value="0" type="hidden"/>
 	 <input name="id" value="${leave.id }" type="hidden"/>
+	 <input name="ts" value="${leave.ts }" type="hidden"/>
 		<table border="0" cellspacing="0" cellpadding="8" align="center" class="table1">
 		<tr height="50">
           <th>申请人</th>

@@ -41,6 +41,18 @@ public class ApplyLeave implements java.io.Serializable {
 	private Date createTime;
 	private String modifier;
 	private Date modifyTime;
+	
+	private Integer ts;//请假天数
+	
+	
+	@Column(name = "ts")
+	public Integer getTs() {
+		return ts;
+	}
+
+	public void setTs(Integer ts) {
+		this.ts = ts;
+	}
 
 	@Id
 	@Column(name = "id", unique = true, nullable = false, length = 32)

@@ -518,6 +518,54 @@ public class AttendanceServiceImpl extends BaseService implements AttendanceServ
 		int ts = baseDao.queryObjectCount(sql, paramMap);
 		return ts;
 	}
+	//出勤
+	@Override
+	public int doJoinTransFindTs2(String userid,Date begin,Date end) {
+		Map<String,Object> paramMap = new HashMap();
+		String sql = "select count(*) from Attendance a,workingcalendar w where w.status = :ZT and a.user.id = :USERID and a.dkTime <= :ENDTIME and a.dkTime >= :BEGINTIME and a.dkTime = w.time";
+		paramMap.put("ZT", 1);
+		paramMap.put("USERID", userid);
+		paramMap.put("BEGINTIME", begin);
+		paramMap.put("ENDTIME",end);
+		int ts = baseDao.queryObjectCount(sql, paramMap);
+		return ts;
+	}
+	@Override
+	public int doJoinTransFindTs2(Date begin,Date end) {
+		Map<String,Object> paramMap = new HashMap();
+		String sql = "select count(*) from workingcalendar w where w.status = :ZT and w.time <= :ENDTIME and w.time >= :BEGINTIME";
+		paramMap.put("ZT", 1);
+		paramMap.put("BEGINTIME", begin);
+		paramMap.put("ENDTIME",end);
+		int gzr = baseDao.queryObjectCount(sql, paramMap);
+		return gzr;
+	}
+	//迟到
+	@Override
+	public int doJoinTransFindCdts(String userid,Date begin,Date end) {
+		Map<String,Object> paramMap = new HashMap();
+		String sql = "select count(*) from Attendance a,workingcalendar w where w.status = :ZT and a.user.id = :USERID and a.dkTime <= :ENDTIME and a.dkTime >= :BEGINTIME and a.dkTime = w.time and a.iscd = :ISCD";
+		paramMap.put("ZT", 1);
+		paramMap.put("ISCD", 1);
+		paramMap.put("USERID", userid);
+		paramMap.put("BEGINTIME", begin);
+		paramMap.put("ENDTIME",end);
+		int ts = baseDao.queryObjectCount(sql, paramMap);
+		return ts;
+	}
+	//早退
+	@Override
+	public int doJoinTransFindZtts(String userid,Date begin,Date end) {
+		Map<String,Object> paramMap = new HashMap();
+		String sql = "select count(*) from Attendance a,workingcalendar w where w.status = :ZT and a.user.id = :USERID and a.dkTime <= :ENDTIME and a.dkTime >= :BEGINTIME and a.dkTime = w.time and a.iszt = :ISZT";
+		paramMap.put("ZT", 1);
+		paramMap.put("ISZT", 1);
+		paramMap.put("USERID", userid);
+		paramMap.put("BEGINTIME", begin);
+		paramMap.put("ENDTIME",end);
+		int ts = baseDao.queryObjectCount(sql, paramMap);
+		return ts;
+	}
 	
 	
 	/**** 

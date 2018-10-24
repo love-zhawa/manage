@@ -49,8 +49,27 @@ public class Attendance implements java.io.Serializable {
 	private Date modifyTime;
 	private Date dkTime;
 	
+	private Integer iscd;//是否迟到1迟到   0正常
+	private Integer iszt;//是否早退1迟到  0正常
 	private ApplyLeave qingjia;
 	
+	@Column(name = "iscd")
+	public Integer getIscd() {
+		return iscd;
+	}
+
+	public void setIscd(Integer iscd) {
+		this.iscd = iscd;
+	}
+	@Column(name = "iszt")
+	public Integer getIszt() {
+		return iszt;
+	}
+
+	public void setIszt(Integer iszt) {
+		this.iszt = iszt;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "qingjia_id")
 	public ApplyLeave getQingjia() {

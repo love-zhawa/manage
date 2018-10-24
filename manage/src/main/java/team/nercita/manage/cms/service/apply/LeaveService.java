@@ -29,4 +29,6 @@ public interface LeaveService {
 	 public void doTransUpdateApplyLeave(ApplyLeave applyLeave);
 	 
 	 List<ApplyLeave> doJoinTransLeave(Date date,String userid);
+	 
+	 public List<ApplyLeave> doJoinTransFindTs(String userid,Date begin,Date end);//请假天数
 }

@@ -48,4 +48,11 @@ public interface AttendanceService {
 	public List<Attendance> doJoinTransAtts(Date date);
 	
 	public int doJoinTransFindTs(String userid,Date bztime);
+	
+	public int doJoinTransFindTs2(String userid,Date begin,Date end);
+	
+	public int doJoinTransFindTs2(Date begin,Date end);//工作日
+	
+	public int doJoinTransFindCdts(String userid,Date begin,Date end);//迟到
+	public int doJoinTransFindZtts(String userid,Date begin,Date end);//早退
 }
