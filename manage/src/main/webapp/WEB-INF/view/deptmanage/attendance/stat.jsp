@@ -43,8 +43,37 @@ $(function(){
     }
 });
 </script>
+<style>
+#tb th:hover{background-color:#e2dfdf;cursor: pointer;}
+</style>
 </head>
 <body>
+<div class='alertWindow' id="alertWindow">
+	<div class="bg_table bg_table1 hide-box" id="rgxq" style="height:60%;">
+		<b class='closeBtn' onclick='closeWindow()'>×</b>
+		<h2
+			style="display: block; width: 100%; text-align: center; font-weight: normal; margin-bottom: 5px;">考勤汇总明细</h2>
+		<div class="content" style="max-height:450px;">
+			<table class="table table-hover text-center" id="tb">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>姓名</th>
+						<th>出勤天数</th>
+						<th>迟到天数</th>
+						<th>早退天数</th>
+						<th>请假天数</th>
+						<th>旷工天数</th>
+						<th>出差天数</th>
+					</tr>
+				</thead>
+				<tbody id="items">
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 <div class="panel admin-panel">
 	<div class="panel-head"><strong class="icon-reorder">&nbsp;&nbsp;我的考勤</strong></div>
   <div class="body-content">
@@ -110,35 +139,6 @@ $(function(){
 			<th>出差</th>
 			<th>加班</th>
 	      </tr>
-	      <%-- <c:forEach items="${statList}" var="stat" varStatus="status">
-	      	<tr>
-	          <td>${status.index+1}</td>
-	          <td>${stat.user.name}</td>
-	          <td>
-	          	<c:if test="${stat.zaodaka == 0}">正常</c:if>
-	          	<c:if test="${stat.zaodaka == 1}">异常</c:if>
-	          </td>
-	          <td>
-	          	<c:if test="${stat.wandaka == 0}">正常</c:if>
-	          	<c:if test="${stat.wandaka == 1}">异常</c:if>
-	          </td>
-	          <td>
-	          	<c:if test="${stat.qingjia == 1}">请假</c:if>
-	          </td>
-	          <td>
-	          	<c:if test="${stat.chuchai == 1}">出差</c:if>
-	          </td>
-	          <td>
-	          	<c:if test="${stat.waichu == 1}">外出</c:if>
-	          </td>
-	          <td>
-	          	<c:if test="${stat.kuanggong == 1}">旷工</c:if>
-	          </td>
-	          <td>
-	          	<c:if test="${stat.jiaban == 1}">加班</c:if>
-	          </td>
-	        </tr>
-	      </c:forEach> --%>
 	      <c:forEach items="${dkmx}" var="d" varStatus="status">
 		      <tr>
 		          <td>${status.index+1}</td>
@@ -166,32 +166,43 @@ $(function(){
 	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274866914'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/stat.php%3Fid%3D1274866914' type='text/javascript'%3E%3C/script%3E"));</script>
 	</div> 
 </body>
-<div class='alertWindow' id="alertWindow">
-	<div class="bg_table bg_table1 hide-box" id="rgxq" style="height:60%;">
-		<b class='closeBtn' onclick='closeWindow()'>×</b>
-		<h2
-			style="display: block; width: 100%; text-align: center; font-weight: normal; margin-bottom: 5px;">考勤汇总明细</h2>
-		<div class="content" style="max-height:450px;">
-			<table class="table table-hover text-center">
-				<thead>
-					<tr>
-						<th>序号</th>
-						<th>姓名</th>
-						<th>出勤天数</th>
-						<th>迟到天数</th>
-						<th>早退天数</th>
-						<th>请假天数</th>
-						<th>旷工天数</th>
-						<th>出差天数</th>
-					</tr>
-				</thead>
-				<tbody id="items">
 
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
+<script>
+var table=document.getElementById("tb");
+var table_th=document.getElementsByTagName("th");
+var table_tbody=table.getElementsByTagName("tbody")[0];
+var table_tr=table_tbody.getElementsByTagName("tr");
+function bind_click(_i){
+        table_th[_i].onclick=function(){
+            var temp_arr=[];
+            var temp_tr_arr=[];
+            for(j=0;j<table_tr.length;j++){
+                temp_arr.push(table_tr[j].getElementsByTagName("td")[_i].innerHTML);
+                temp_tr_arr.push(table_tr[j].cloneNode(true));
+            };
+            var tr_length=table_tr.length
+            for(x=0;x<tr_length;x++){
+                table_tbody.removeChild(table_tbody.getElementsByTagName("tr")[0]);
+            }
+            var temp=parseInt(temp_arr[0])||temp_arr[0];
+            if(typeof(temp)=='number'){
+                temp_arr.sort(function(a,b){return a-b;});
+            }else{
+                temp_arr.sort();
+            }
+            for(k=0;k<temp_arr.length;k++){
+                    for(vv=0;vv<temp_tr_arr.length;vv++){
+                        if(temp_arr[k]==temp_tr_arr[vv].getElementsByTagName("td")[_i].innerHTML){
+                            table_tbody.appendChild(temp_tr_arr[vv]);
+                        }
+                    }
+            }
+        }
+    }
+for(i=0;i<table_th.length;i++){
+    bind_click(i);
+}
+</script>
 <script type="text/javascript">
 	    function show() {
 	    	var beginTime = $("#beginTime").val();
