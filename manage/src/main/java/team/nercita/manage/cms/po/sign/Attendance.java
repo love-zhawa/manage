@@ -50,7 +50,7 @@ public class Attendance implements java.io.Serializable {
 	private Date dkTime;
 	
 	private Integer iscd;//是否迟到1迟到   0正常
-	private Integer iszt;//是否早退1迟到  0正常
+	private Integer iszt;//是否早退1早退  0正常
 	private ApplyLeave qingjia;
 	
 	@Column(name = "iscd")

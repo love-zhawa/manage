@@ -195,71 +195,50 @@ $(function(){
 	</div>
 </div>
 <script type="text/javascript">
-	function show(){
-		var beginTime = $("#beginTime").val();
-		var endTime = $("#endTime").val();
-		if(beginTime>endTime){
-			alert("开始时间不能大于结束时间！");
-			return;
-		}
-		$.post("attendance/tj",{"beginTime":beginTime,"endTime":endTime},function(data){
-			$.each(data,function(index, item){
-				var tr = "<tr>";
-				tr += "<td>";
-				tr += index+1
-				tr += "</td>";
-				tr += "<td>";
-				tr += item.str1
-				tr += "</td>";
-				tr += "<td>";
-				tr += item.str2
-				tr += "</td>";
-				tr += "<td>";
-				tr += item.str3
-				tr += "</td>";
-				tr += "<td>";
-				tr += item.str4
-				tr += "</td>";
-				tr += "<td>";
-				tr += item.str5
-				tr += "</td>";
-				tr += "<td>";
-				tr += item.str6
-				tr += "</td>";
-				tr += "<td>";
-				tr += "";
-				tr += "</td>";
-				tr += "</tr>";
-				
-				$("#items").append(tr);
+	    function show() {
+	    	var beginTime = $("#beginTime").val();
+			var endTime = $("#endTime").val();
+			if(beginTime>endTime){
+				alert("开始时间不能大于结束时间！");
+				return;
+			}
+			$.post("attendance/tj",{"beginTime":beginTime,"endTime":endTime}, function(data) {
+				$.each(data, function(index, item) {
+					var tr = "<tr>";
+					tr += "<td>";
+					tr += index+1
+					tr += "</td>";
+					tr += "<td>";
+					tr += item.str1
+					tr += "</td>";
+					tr += "<td>";
+					tr += item.str2
+					tr += "</td>";
+					tr += "<td>";
+					tr += item.str3
+					tr += "</td>";
+					tr += "<td>";
+					tr += item.str4
+					tr += "</td>";
+					tr += "<td>";
+					tr += item.str5
+					tr += "</td>";
+					tr += "<td>";
+					tr += item.str6
+					tr += "</td>";
+					tr += "<td>";
+					tr += "";
+					tr += "</td>";
+					tr += "</tr>";
+					
+					$("#items").append(tr);
+				});
 			});
-		});
-	   /* $.post("workjoutanl/toadds/"+userid,function(data){
-					$.each(data,function(index, item){
-						var tr = "<tr>";
-						tr += "<td>";
-						tr += index+1
-						tr += "</td>";
-						tr += "<td>";
-						tr += item.worklog
-						tr += "</td>";
-						tr += "<td>";
-						tr += item.joutanlDate
-						tr += "</td>";
-						tr += "</tr>";
-						
-						if(index>29){
-							return;
-						}
-						$("#itemss").append(tr);
-						$("#username").text(item.username);
-					});
-				});			 */
-				
+
 			$("#alertWindow").show();
 			$("#rgxq").show();
-	    }
-	     function closeWindow(){
+		}
+	    function closeWindow(){
 			$("#alertWindow").hide();
 			$("#rgxq").hide();
 			$("#items").empty();
