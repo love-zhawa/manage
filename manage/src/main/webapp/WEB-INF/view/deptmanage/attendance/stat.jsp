@@ -97,8 +97,6 @@ $(function(){
 	      </ul>
 	    </div>
     </form>
-    <table class="layui-hide" id="test"></table>
-    
     
     <div style="overflow-y: scroll;height: 560px;">
 		<table class="table table-hover text-center">
