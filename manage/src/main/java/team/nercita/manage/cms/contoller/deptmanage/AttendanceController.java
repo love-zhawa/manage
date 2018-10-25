@@ -7,11 +7,7 @@
  */
 package team.nercita.manage.cms.contoller.deptmanage;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +54,6 @@ public class AttendanceController {
 	
 	@Autowired
 	AttendanceService attendanceService;
-	
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -128,9 +123,9 @@ public class AttendanceController {
 		request.setAttribute("day",day);
 		return view;
 	}
-	@RequestMapping("/tj")
 	@ResponseBody
-	public List<AlertWinVo> tj(HttpServletRequest request,@ModelAttribute(value="beginTime") String beginTime,@ModelAttribute(value="endTime") String endTime) {
+	@RequestMapping("/tj")
+	public List<AlertWinVo> tj(String beginTime,String endTime) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("beginTime", beginTime);
 		paramMap.put("endTime", endTime);
@@ -175,7 +170,6 @@ public class AttendanceController {
 		}
 		return voList;
 	}
-	
 	@RequestMapping("/toadd")
 	public String toadd(){
 		return "deptmanage/attendance/add";
