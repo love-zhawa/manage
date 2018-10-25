@@ -202,7 +202,7 @@ $(function(){
 				alert("开始时间不能大于结束时间！");
 				return;
 			}
-			$.post("attendance/tj",{"beginTime":beginTime,"endTime":endTime}, function(data) {
+			$.post("attendance/tj/"+beginTime+","+endTime, function(data) {
 				$.each(data, function(index, item) {
 					var tr = "<tr>";
 					tr += "<td>";

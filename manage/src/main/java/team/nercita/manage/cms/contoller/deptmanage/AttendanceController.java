@@ -21,6 +21,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -123,9 +124,9 @@ public class AttendanceController {
 		request.setAttribute("day",day);
 		return view;
 	}
+	@RequestMapping("/tj/{beginTime},{endTime}")
 	@ResponseBody
-	@RequestMapping("/tj")
-	public List<AlertWinVo> tj(String beginTime,String endTime) {
+	public List<AlertWinVo> tj(@PathVariable String beginTime,@PathVariable String endTime) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("beginTime", beginTime);
 		paramMap.put("endTime", endTime);
@@ -154,7 +155,9 @@ public class AttendanceController {
 				int qjts = 0;
 				if(qjtss.size()>0){
 					for (ApplyLeave app : qjtss) {
-						qjts+=app.getTs();
+						if(app.getTs()!=null&&!app.getTs().equals("")){
+							qjts+=app.getTs();
+						}
 					}
 				}
 				
