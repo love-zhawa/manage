@@ -186,7 +186,7 @@ function bind_click(_i){
             }
             var temp=parseInt(temp_arr[0])||temp_arr[0];
             if(typeof(temp)=='number'){
-                temp_arr.sort(function(a,b){return a-b;});
+                temp_arr.sort(function(a,b){return b-a;});
             }else{
                 temp_arr.sort();
             }
